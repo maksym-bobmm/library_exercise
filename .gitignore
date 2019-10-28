@@ -21,6 +21,8 @@
 /yarn-error.log
 
 .byebug_history
-
+db_design.mwb
+db_design.mwb.bak
+/config/mongoid.yml
 # Ignore application configuration
 /config/application.yml
