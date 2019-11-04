@@ -1,1 +1,36 @@
 !!!
+.container-fluid
+  .row
+    .col
+      %h1.text-center Library
+      .top-books
+        %h5.text-center Top rated books
+        %table.table.table-striped.table-bordered.table-sm
+          %thead
+            %tr.bg-secondary
+              %th Name
+              %th Description
+              %th Author
+              %th Status
+          %tdata
+            - @top_books.each do |book|
+              %tr
+                %td=book.name
+                %td=book.description
+                %td=book.author
+      .all-books
+        %h5.text-center All books
+        %table.table.table-striped.table-bordered
+          %thead
+            %tr.bg-secondary
+              %th Name
+              %th Description
+              %th Author
+              %th Status
+          %tdata
+            - @books.each do |book|
+              %tr
+                %td=book.name
+                %td=book.description
+                %td=book.author
+      = link_to 'create book', new_book_path
