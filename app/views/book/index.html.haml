@@ -8,5 +8,7 @@
         = render 'table', books: @top_books
       .all-books
         %h5.text-center All books
-        = render 'table', books: @books
+        =form_with url: destroy_multiple_book_index_path, method: :post do
+          = render 'table', books: @books
+          = submit_tag 'delete selected', id: 'delete_multiple'
       = link_to 'create book', new_book_path

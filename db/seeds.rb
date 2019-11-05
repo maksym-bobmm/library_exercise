@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+(1..50).each do |index|
+  Book.create(name: "book#{index}", description: "description#{index}", author: "author#{index}")
+end

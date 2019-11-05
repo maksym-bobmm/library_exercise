@@ -16,6 +16,14 @@ class BookController < ApplicationController
     redirect_to book_index_path
   end
 
+  def destroy_multiple
+    ids = params['books_ids'] if params['books_ids'].present?
+    ids.each do |id|
+      Book.find(id).destroy
+    end
+    redirect_to book_index_path
+  end
+
   def show
 
   end
