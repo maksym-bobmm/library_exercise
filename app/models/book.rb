@@ -6,6 +6,7 @@ class Book
   field :likes, type: Integer, default: 0
   field :state, type: Boolean, default: false
   field :rating, type: Float, default: 0
+  field :taken_count, type: Integer, default: 0
 
-  validates_presence_of :name, :description
+  validates_presence_of :name, :description, :author
 end

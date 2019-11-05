@@ -11,6 +11,15 @@ class BookController < ApplicationController
     redirect_to book_index_path
   end
 
+  def destroy
+    Book.find(params['id']).delete
+    redirect_to book_index_path
+  end
+
+  def show
+
+  end
+
   private
 
   def book_params
