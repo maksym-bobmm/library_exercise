@@ -12,3 +12,4 @@
           = render 'table', books: @books
           = submit_tag 'delete selected', id: 'delete_multiple'
       = link_to 'create book', new_book_path
+      -#= paginate @books

@@ -22,6 +22,7 @@ gem 'figaro'
 gem 'haml'
 gem 'bootstrap'
 gem 'jquery-rails'
+gem 'kaminari'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

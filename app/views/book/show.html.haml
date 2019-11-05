@@ -1,0 +1,9 @@
+!!!
+.container-fluid
+  .row
+    .col.text-center
+      %h4=@book.name
+      %span
+        = 'Likes:' + @book.likes.to_s
+      = button_tag 'Take', type: 'button'
+      %p=@book.description

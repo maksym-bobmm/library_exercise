@@ -17,7 +17,9 @@ class BookController < ApplicationController
   end
 
   def destroy_multiple
-    ids = params['books_ids'] if params['books_ids'].present?
+    return unless params['books_ids'].present?
+
+    ids = params['books_ids']
     ids.each do |id|
       Book.find(id).destroy
     end
@@ -25,7 +27,7 @@ class BookController < ApplicationController
   end
 
   def show
-
+    @book = Book.find(params['id'])
   end
 
   private
