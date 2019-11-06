@@ -24,6 +24,7 @@ gem 'bootstrap'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'kaminari-mongoid'
+gem 'rspec'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

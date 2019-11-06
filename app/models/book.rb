@@ -9,4 +9,7 @@ class Book
   field :taken_count, type: Integer, default: 0
 
   validates_presence_of :name, :description, :author
+
+  has_many :comments
+  has_many :histories
 end
