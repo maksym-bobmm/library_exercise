@@ -1,7 +1,8 @@
 class BookController < ApplicationController
   def index
-    @books = Book.all
-    @top_books = @books.sort_by { |book| book.rating }.reverse.first(5)
+    @books = Book.order_by(name: :asc).page params[:page]
+    # @top_books = @books.sort_by { |book| book.rating }.reverse.first(5)
+    @top_books = Book.order_by(rating: :desc).limit(5).to_a
   end
 
   def new; end

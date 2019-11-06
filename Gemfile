@@ -23,6 +23,7 @@ gem 'haml'
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'kaminari-mongoid'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
