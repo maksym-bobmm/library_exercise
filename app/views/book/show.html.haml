@@ -4,6 +4,8 @@
     .col.text-center
       %h4=@book.name
       %span
+        = link_to image_tag('')
+      %span
         = 'Likes:' + @book.likes.to_s
       = button_tag 'Take', type: 'button'
       %p=@book.description
