@@ -6,5 +6,7 @@ Rails.application.routes.draw do
       post 'destroy_multiple'
     end
   end
+  resources :rating, only: [:create]
+  get '/rating', to: 'rating#create'
   root 'book#index'
 end

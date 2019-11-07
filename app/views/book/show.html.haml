@@ -1,11 +1,18 @@
 !!!
+-#%link{href: "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel: "stylesheet", integrity: "sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin: "anonymous"}
+-#%link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.0/css/all.css", integrity: "sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ", crossorigin: "anonymous"}
 .container-fluid
   .row
     .col.text-center
       %h4=@book.name
       %span
-        = link_to image_tag('')
+        - if @liked
+          = draw_rating_with { |number| filled_rating_tags(number, @book) }
+        - else
+          = draw_rating_with { |number| empty_rating_tags(number, @book) }
       %span
         = 'Likes:' + @book.likes.to_s
+        -#%span{style: "font-size: 48px; color: Dodgerblue;"}
+        -#  %i.far.fa-star.fa-2x
       = button_tag 'Take', type: 'button'
       %p=@book.description

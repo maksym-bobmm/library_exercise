@@ -35,6 +35,7 @@ class User
   # field :locked_at,       type: Time
   field :name, type: String
 
+  embeds_many :liked_books
   has_many :comments
   has_many :histories
 end

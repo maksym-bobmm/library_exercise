@@ -28,7 +28,10 @@ class BookController < ApplicationController
   end
 
   def show
+    byebug
     @book = Book.find(params['id'])
+    @liked = current_user.liked_books.where(id: @book.id).exists?
+    @rating_score = current_user.liked_books.find(@book.id).score if @liked
   end
 
   private
