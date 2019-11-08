@@ -1,5 +1,7 @@
 class User
   include Mongoid::Document
+  include Mongoid::Attributes::Dynamic
+  # alias_attribute(:score, :format)
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

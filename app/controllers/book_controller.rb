@@ -1,7 +1,6 @@
 class BookController < ApplicationController
   def index
     @books = Book.order_by(name: :asc).page params[:page]
-    # @top_books = @books.sort_by { |book| book.rating }.reverse.first(5)
     @top_books = Book.order_by(rating: :desc).limit(5).to_a
   end
 
@@ -30,8 +29,8 @@ class BookController < ApplicationController
   def show
     byebug
     @book = Book.find(params['id'])
-    @liked = current_user.liked_books.where(id: @book.id).exists?
-    @rating_score = current_user.liked_books.find(@book.id).score if @liked
+    @liked = current_user.liked_books.where(book_id: @book.id).exists?
+    @rating_score = current_user.liked_books.find_by(book_id: @book.id).score if @liked
   end
 
   private
