@@ -5,12 +5,12 @@ module BooksHelper
 
   def filled_rating_tags(index, book)
     link_to image_tag('star_filled.png', alt: 'rating', id: "star_filled_#{index}"),
-            rating_index_path(score: index, book_id: book.id), method: :post, remote: false
+            rating_index_path(score: index, book_id: book.id), method: :post, class: 'rating_link', remote: true
   end
 
   def empty_rating_tags(index, book)
     link_to image_tag('star_empty.png', alt: 'rating', id: "star_empty_#{index}"),
-            rating_index_path(score: index, book_id: book.id), method: :post, remote: false
+            rating_index_path(score: index, book_id: book.id), method: :post, class: 'rating_link', remote: true
   end
 
   def draw_rating(num, book)

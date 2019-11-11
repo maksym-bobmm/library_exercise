@@ -5,7 +5,7 @@
   .row
     .col.text-center
       %h4=@book.name
-      %span
+      %span.rating
         = draw_rating(@rating_score, @book)
       %span
         = 'Likes:' + @book.likes.to_s
