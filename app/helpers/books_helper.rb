@@ -5,20 +5,22 @@ module BooksHelper
 
   def filled_rating_tags(index, book)
     link_to image_tag('star_filled.png', alt: 'rating', id: "star_filled_#{index}"),
-            rating_index_path(score: index, book_id: book.id), method: :post, remote: true
+            rating_index_path(score: index, book_id: book.id), method: :post, remote: false
   end
 
   def empty_rating_tags(index, book)
-    byebug
     link_to image_tag('star_empty.png', alt: 'rating', id: "star_empty_#{index}"),
-            rating_index_path(score: index, book_id: book.id), method: :post, remote: true
+            rating_index_path(score: index, book_id: book.id), method: :post, remote: false
   end
 
-  def draw_rating(num = 5, book)
+  def draw_rating(num, book)
     result = ActiveSupport::SafeBuffer.new
-    byebug
-    (1..num||5).each do |index|
-      result << yield(index, book)
+    (1..5).each_with_index do |number, index|
+      if index < num
+        result << filled_rating_tags(number, book)
+      else
+        result << empty_rating_tags(number, book)
+      end
     end
     result
   end

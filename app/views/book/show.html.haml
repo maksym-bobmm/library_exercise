@@ -6,11 +6,7 @@
     .col.text-center
       %h4=@book.name
       %span
-        - if @liked
-          = byebug
-          = draw_rating(@rating_score, @book) { |number, book| filled_rating_tags(number, book) }
-        - else
-          = draw_rating(@rating_score, @book) { |number, book| empty_rating_tags(number, book) }
+        = draw_rating(@rating_score, @book)
       %span
         = 'Likes:' + @book.likes.to_s
         -#%span{style: "font-size: 48px; color: Dodgerblue;"}
