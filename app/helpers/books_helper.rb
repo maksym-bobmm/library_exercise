@@ -4,13 +4,13 @@ module BooksHelper
   end
 
   def filled_rating_tags(like_score, book)
-    link_to image_tag('star_filled.png', alt: 'rating', id: "star_filled_#{like_score}"),
-            rating_index_path(score: like_score, book_id: book.id), method: :post, class: 'rating_link', remote: true
+    link_to raw('<i class="fas fa-star fa-2x"></i>'), rating_index_path(score: like_score, book_id: book.id),
+            method: :post, class: 'rating_link', remote: true
   end
 
   def empty_rating_tags(like_score, book)
-    link_to image_tag('star_empty.png', alt: 'rating', id: "star_empty_#{like_score}"),
-            rating_index_path(score: like_score, book_id: book.id), method: :post, class: 'rating_link', remote: true
+    link_to raw('<i class="far fa-star fa-2x"></i>'), rating_index_path(score: like_score, book_id: book.id),
+            method: :post, class: 'rating_link', remote: true
   end
 
   def draw_rating(like_score, book)

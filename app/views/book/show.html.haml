@@ -1,6 +1,4 @@
-!!!
--#%link{href: "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel: "stylesheet", integrity: "sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin: "anonymous"}
--#%link{rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.7.0/css/all.css", integrity: "sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ", crossorigin: "anonymous"}
+%script{src: "https://kit.fontawesome.com/0b512414c4.js", crossorigin: "anonymous"}
 .container-fluid
   .row
     .col.text-center
@@ -9,7 +7,5 @@
         = draw_rating(@rating_score, @book)
       %span Likes:
       %span.likes_count=@likes_count
-      -#%span{style: "font-size: 48px; color: Dodgerblue;"}
-      -#  %i.far.fa-star.fa-2x
       = button_tag 'Take', type: 'button'
       %p=@book.description
