@@ -28,8 +28,8 @@ class BookController < ApplicationController
 
   def show
     @book = Book.find(params['id'])
-    liked = current_user.liked_books.where(book_id: @book.id).exists?
-    @rating_score = liked ? current_user.liked_books.find_by(book_id: @book.id).score : 0
+    liked = @book.users_likes.where(user_id: current_user.id).exists?
+    @rating_score = liked ? @book.users_likes.find_by(user_id: current_user.id).score : 0
   end
 
   private
@@ -37,5 +37,4 @@ class BookController < ApplicationController
   def book_params
     params.permit(:name, :description, :author)
   end
-
 end

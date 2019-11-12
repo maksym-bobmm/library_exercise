@@ -12,4 +12,5 @@ class Book
 
   has_many :comments
   has_many :histories
+  embeds_many :users_likes
 end
