@@ -7,9 +7,9 @@
       %h4=@book.name
       %span.rating
         = draw_rating(@rating_score, @book)
-      %span
-        = 'Likes:' + @book.likes.to_s
-        -#%span{style: "font-size: 48px; color: Dodgerblue;"}
-        -#  %i.far.fa-star.fa-2x
+      %span Likes:
+      %span.likes_count=@likes_count
+      -#%span{style: "font-size: 48px; color: Dodgerblue;"}
+      -#  %i.far.fa-star.fa-2x
       = button_tag 'Take', type: 'button'
       %p=@book.description

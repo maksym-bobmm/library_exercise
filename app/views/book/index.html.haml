@@ -3,6 +3,8 @@
   .row
     .col
       %h1.text-center Library
+      .text-center
+        = link_to 'create book', new_book_path
       .top-books
         %h5.text-center Top rated books
         = render 'table', books: @top_books
@@ -13,5 +15,3 @@
           .pagination.d-flex.justify-content-center
             = paginate @books
           = submit_tag 'delete selected', id: 'delete_multiple'
-
-      = link_to 'create book', new_book_path
