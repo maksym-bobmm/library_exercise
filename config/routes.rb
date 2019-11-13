@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :book do
     collection do
       post 'destroy_multiple'
+      post 'take'
+      post 'return'
     end
   end
   resources :rating, only: [:create]

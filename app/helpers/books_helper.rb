@@ -24,4 +24,20 @@ module BooksHelper
     end
     result
   end
+
+  def draw_take_button(book)
+    if book.state
+      button_name = 'Take'
+      css_class = 'bg-success'
+      disabled = false
+      action = 'take'
+    else
+      taked_user_id = book.histories.any? ? book.histories.last.user_id.to_s : current_user.id.to_s
+      button_name = current_user.id.to_s == taked_user_id ? 'Return' : 'Already taken'
+      disabled = current_user.id.to_s == taked_user_id ? false : true
+      css_class = 'bg-warning'
+      action = 'return'
+    end
+    button_to button_name, { action: action, book_id: book.id }, class: css_class, disabled: disabled
+  end
 end

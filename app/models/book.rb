@@ -4,7 +4,7 @@ class Book
   field :name, type: String
   field :description, type: String
   field :author, type: String
-  field :state, type: Boolean, default: false
+  field :state, type: Boolean, default: true
   field :taken_count, type: Integer, default: 0
   field :avatar, type: String
 

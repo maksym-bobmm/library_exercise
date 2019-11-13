@@ -10,7 +10,7 @@
     .col.text-left
       %span Likes:
       %span.likes_count=@likes_count
-      = button_tag 'Take', type: 'button'
+      = draw_take_button(@book)
       %br
       %p=@book.description
   .col.text-center

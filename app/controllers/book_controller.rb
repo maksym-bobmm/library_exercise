@@ -10,7 +10,7 @@ class BookController < ApplicationController
     if Book.create(book_params)
       redirect_to book_index_path
     else
-      redirecT_to new_book_path
+      redirect_to new_book_path
     end
   end
 
@@ -34,6 +34,25 @@ class BookController < ApplicationController
     liked = @book.users_likes.where(user_id: current_user.id).exists?
     @rating_score = liked ? @book.users_likes.find_by(user_id: current_user.id).score : 0
     @likes_count = @book.users_likes.size
+  end
+
+  def take
+    return unless user_signed_in?
+
+    book = Book.find(params['book_id'])
+    book.update_attributes(state: false)
+    book.histories.create(user_id: current_user.id, take_date: Time.now )
+    redirect_to book_path(book)
+  end
+
+  def return
+    return unless user_signed_in?
+
+    book = Book.find(params['book_id'])
+    book.update_attributes(state: true)
+    # byebug
+    book.histories.all.last.update_attributes(return_date: Time.now) if book.histories.any?
+    redirect_to book_path(book)
   end
 
   private
