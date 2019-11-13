@@ -1,11 +1,17 @@
 %script{src: "https://kit.fontawesome.com/0b512414c4.js", crossorigin: "anonymous"}
 .container-fluid
+  %h4.text-center=@book.name
   .row
-    .col.text-center
-      %h4=@book.name
+    .col.text-right
       %span.rating
         = draw_rating(@rating_score, @book)
+      %br
+      = image_tag(@book.avatar.thumb.to_s, alt: 'avatar')
+    .col.text-left
       %span Likes:
       %span.likes_count=@likes_count
       = button_tag 'Take', type: 'button'
+      %br
       %p=@book.description
+  .col.text-center
+    = link_to 'back', book_index_path

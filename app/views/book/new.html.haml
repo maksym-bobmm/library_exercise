@@ -1,12 +1,12 @@
-!!!
 .container-fluid
   .row
     .col
       %h3.text-center Create book
       .text-center
-        = form_with url: book_index_path, method: :post, local: true do
+        = form_with url: book_index_path, method: :post, local: true, multipart: true do
           = text_field_tag(:name, nil, placeholder: 'Book name')
           %br= text_field_tag(:description, nil, placeholder: 'Description')
           = text_field_tag(:author, nil, placeholder: 'Author')
+          %br= file_field_tag('avatar')
           %br= submit_tag('create')
         = link_to 'back', book_index_path

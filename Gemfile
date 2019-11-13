@@ -25,6 +25,8 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'kaminari-mongoid'
 gem 'devise'
+gem 'carrierwave', '~> 2.0'
+gem 'carrierwave-mongoid'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

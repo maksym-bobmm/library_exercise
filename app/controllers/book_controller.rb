@@ -7,8 +7,11 @@ class BookController < ApplicationController
   def new; end
 
   def create
-    Book.create(book_params)
-    redirect_to book_index_path
+    if Book.create(book_params)
+      redirect_to book_index_path
+    else
+      redirecT_to new_book_path
+    end
   end
 
   def destroy
@@ -36,6 +39,6 @@ class BookController < ApplicationController
   private
 
   def book_params
-    params.permit(:name, :description, :author)
+    params.permit(:name, :description, :author, :avatar)
   end
 end

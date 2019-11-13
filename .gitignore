@@ -26,3 +26,5 @@ db_design.mwb.bak
 /config/mongoid.yml
 # Ignore application configuration
 /config/application.yml
+# ignore saved image
+/public/uploads/*
