@@ -3,15 +3,27 @@
   %h4.text-center=@book.name
   .row
     .col.text-right
-      %span.rating
-        = draw_rating(@rating_score, @book)
+      %button.btn.btn-info{ type: 'button' }
+        Average rating
+        %span.badge.badge-primary=@book.rating
+      %br
+      %span
+        %button.btn.btn-info{ type: 'button' }
+          Likes:
+          %span.badge.badge-warning= @likes_count
       %br
       = image_tag(@book.avatar.thumb.to_s, alt: 'avatar')
     .col.text-left
-      %span Likes:
-      %span.likes_count=@likes_count
+      %span.rating= draw_rating(@rating_score, @book)
       = draw_take_button(@book)
       %br
       %p=@book.description
+
   .col.text-center
     = link_to 'back', book_index_path
+  .comment-create
+    = render 'comments/new', book: @book
+  .container
+    - @parent_comments.each do |comment|
+      = render 'comments/comment', locals: { comment: comment }
+    -#= render @parent_comments

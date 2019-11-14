@@ -1,0 +1,11 @@
+= content_tag(:div, class: (locals[:comment].has_parent? ? 'nested_comment' : 'comment')) do
+  .comment-header.text-left
+    %span.text-left=locals[:comment].user.username? ? locals[:comment].user.username : locals[:comment].user.email
+    %time=locals[:comment].updated_at.to_formatted_s(:short)
+    .comment-body
+      %p.text-break.text-monospace.text-justify=locals[:comment].body
+    .comment-footer.text-left
+      =link_to 'Reply', new_comment_path(locals[:comment].id.to_s)
+
+    - locals[:comment].comments.each do |reply|
+      = render 'comments/comment', locals: { comment: reply }

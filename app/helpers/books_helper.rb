@@ -1,6 +1,6 @@
 module BooksHelper
   def receive_book_state(book)
-    book.state ? 'Out' : 'In'
+    book.state ? 'In' : 'Out'
   end
 
   def filled_rating_tags(like_score, book)
@@ -26,7 +26,8 @@ module BooksHelper
   end
 
   def draw_take_button(book)
-    if book.state
+    # byebug
+    if book.state || !user_signed_in?
       button_name = 'Take'
       css_class = 'bg-success'
       disabled = false

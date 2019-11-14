@@ -1,0 +1,14 @@
+%table.table.table.stripped.bordered
+  %thead.bg-secondary{'data-toggle': 'collapse', 'data-target': '#collapse'}
+    %tr
+      %th User
+      %th Book
+      %th Take book date
+      %th Return book date
+  %tbody.collapse#collapse
+    - histories.each do |history|
+      %tr
+        %td=history.user.email
+        %td=history.book.name
+        %td=history.take_date
+        %td=history.return_date

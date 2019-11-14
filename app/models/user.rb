@@ -18,6 +18,9 @@ class User
   ## Rememberable
   field :remember_created_at, type: Time
 
+  ## Custom
+  field :username, type: String
+
   ## Trackable
   # field :sign_in_count,      type: Integer, default: 0
   # field :current_sign_in_at, type: Time
@@ -38,5 +41,5 @@ class User
   field :name, type: String
 
   has_many :comments
-  has_many :histories
+  has_many :histories, dependent: :destroy
 end

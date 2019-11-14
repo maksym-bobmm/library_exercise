@@ -14,3 +14,7 @@
           .pagination.d-flex.justify-content-center
             = paginate @books
           = submit_tag 'delete selected', id: 'delete_multiple'
+      - if @histories.size.positive?
+        .history
+          %h5.text-center History
+          = render 'history', histories: @histories

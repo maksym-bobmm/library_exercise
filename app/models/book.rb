@@ -11,6 +11,15 @@ class Book
   validates_presence_of :name, :description, :author
 
   has_many :comments
-  has_many :histories
+  has_many :histories, dependent: :destroy
   embeds_many :users_likes
+
+  def likes_sum
+    users_likes.sum(:score)
+  end
+  def rating
+    return 0 if users_likes.size == 0
+
+    likes_sum / users_likes.size
+  end
 end

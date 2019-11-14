@@ -2,6 +2,7 @@ class BookController < ApplicationController
   def index
     @books = Book.order_by(name: :asc).page params[:page]
     @top_books = Book.order_by(rating: :desc).limit(5).to_a
+    @histories = History.all
   end
 
   def new; end
@@ -31,9 +32,11 @@ class BookController < ApplicationController
 
   def show
     @book = Book.find(params['id'])
-    liked = @book.users_likes.where(user_id: current_user.id).exists?
-    @rating_score = liked ? @book.users_likes.find_by(user_id: current_user.id).score : 0
+    liked = @book.users_likes.where(user_id: current_user&.id).exists?
+    @rating_score = liked ? @book.users_likes.find_by(user_id: current_user&.id).score : 0
     @likes_count = @book.users_likes.size
+    # @comment = Comment.all
+    @parent_comments = @book.comments.parents
   end
 
   def take
@@ -54,7 +57,6 @@ class BookController < ApplicationController
 
     book = Book.find(params['book_id'])
     book.update_attributes(state: true)
-    # byebug
     book.histories.all.last.update_attributes(return_date: Time.now) if book.histories.any?
     if request.xhr?
       render json: { button: helpers.draw_take_button(book) }

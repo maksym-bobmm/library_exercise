@@ -29,7 +29,8 @@ module LibraryExercise
     # config.generators.javascript_engine :js
     config.generators.test_framework :rspec
     config.generators.template_engine :haml
-    config.load_defaults 5.1
+    config.load_defaults 6.0
+    config.time_zone = 'Kyiv'
 
 
     # Settings in config/environments/* take precedence over those specified here.

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
   end
   resources :rating, only: [:create]
+  resources :comments, except: %i[index]
   get '/rating', to: 'rating#create'
   root 'book#index'
 end
