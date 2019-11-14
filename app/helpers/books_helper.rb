@@ -38,6 +38,6 @@ module BooksHelper
       css_class = 'bg-warning'
       action = 'return'
     end
-    button_to button_name, { action: action, book_id: book.id }, class: css_class, disabled: disabled
+    button_to button_name, { action: action, book_id: book.id }, class: css_class, disabled: disabled, remote: true
   end
 end

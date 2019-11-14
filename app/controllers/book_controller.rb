@@ -42,7 +42,11 @@ class BookController < ApplicationController
     book = Book.find(params['book_id'])
     book.update_attributes(state: false)
     book.histories.create(user_id: current_user.id, take_date: Time.now )
-    redirect_to book_path(book)
+    if request.xhr?
+      render json: { button: helpers.draw_take_button(book) }
+    else
+      redirect_to book_path(book)
+    end
   end
 
   def return
@@ -52,7 +56,11 @@ class BookController < ApplicationController
     book.update_attributes(state: true)
     # byebug
     book.histories.all.last.update_attributes(return_date: Time.now) if book.histories.any?
-    redirect_to book_path(book)
+    if request.xhr?
+      render json: { button: helpers.draw_take_button(book) }
+    else
+      redirect_to book_path(book)
+    end
   end
 
   private
