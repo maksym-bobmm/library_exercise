@@ -1,4 +1,4 @@
-.text-center
+.text-center#create-comment
   =form_with model: Comment.new do
     = text_area_tag :body, nil, placeholder: 'comment`s text', class: 'comment_text'
     %br
