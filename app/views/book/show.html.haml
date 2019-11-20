@@ -23,7 +23,7 @@
     = link_to 'back', book_index_path
   .comment-create
     = render 'comments/new', book: @book
-  .container
+  .container.red_left
     - @parent_comments.each do |comment|
       = render 'comments/comment', locals: { comment: comment }
     -#= render @parent_comments
