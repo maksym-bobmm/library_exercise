@@ -4,7 +4,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-
     book = Book.find(params['book_id'])
     if params['parent_comment_id']
       book.comments.find(params['parent_comment_id']).comments.create(nested_comments_params)
@@ -18,6 +17,12 @@ class CommentsController < ApplicationController
   end
 
   def update
+    return unless params['body']
+
+    comment = Comment.find(params['comment_id'])
+    comment.update(body: params['body'])
+    book = Book.find(params['id'])
+    redirect_to book_path(book)
   end
 
   def destroy

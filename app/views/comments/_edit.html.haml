@@ -1,10 +1,15 @@
 .modal.fade#edit-comment{ tabindex: '-1', role: 'dialog' }
   .modal-dialog{ role: 'document' }
     .modal-content
-      .modal-header
+      .modal-header.text-center
         %h5.modal-title#exampleModalLabel Edit comment
         %button.close{ type: 'button', 'data-dismiss': 'modal' }
+          %span( aria-hidden="true") &times
       .modal-body
+        =form_with url: comment_path, method: :patch, id: 'update-comment' do
+          = text_area_tag :body, nil, placeholder: 'comment`s text', class: 'comment_text'
+          = hidden_field_tag 'comment_id', comment_id
+          = hidden_field_tag 'user_id', current_user.id
       .modal-footer
         %button.btn.btn-secondary{'data-dismiss': 'modal'} Close
-        %button.btn.btn-primary Save changes
+        = submit_tag :'Save changes', form: 'update-comment', class: 'btn btn-primary'

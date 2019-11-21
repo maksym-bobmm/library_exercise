@@ -1,6 +1,6 @@
 .text-center
   =form_with model: Comment.new, id: 'create-comment' do
-    = text_area_tag :body, nil, placeholder: 'comment`s text', class: 'comment_text'
+    = text_area_tag :body, nil, placeholder: 'comment`s text'
     %br
     = hidden_field_tag 'book_id', @book.id
     = hidden_field_tag 'user_id', current_user.id
