@@ -4,9 +4,14 @@ class CommentsController < ApplicationController
   end
 
   def create
-    byebug
+
     book = Book.find(params['book_id'])
-    book.comments.create!(comments_params)
+    if params['parent_comment_id']
+      book.comments.find(params['parent_comment_id']).comments.create(nested_comments_params)
+    else
+      book.comments.create!(comments_params)
+    end
+    redirect_to book
   end
 
   def edit
@@ -25,7 +30,10 @@ class CommentsController < ApplicationController
   private
 
   def comments_params
-    # params['user_id'] = current_user.id if params['user_id'].blank?
     params.permit(:body, :user_id)
+  end
+
+  def nested_comments_params
+    comments_params.merge(book_id: params['book_id'])
   end
 end

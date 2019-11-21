@@ -5,7 +5,7 @@
     .comment-body
       %p.text-break.text-monospace.text-justify=locals[:comment].body
     .comment-footer.text-left
-      =link_to 'Reply', '#create-comment', 'data-comment_id': locals[:comment].id
+      =link_to 'Reply', '#create-comment', 'data-comment_id': locals[:comment].id, class: 'Reply', onclick: 'reply_click(event); return false;'
 
     - locals[:comment].comments.each do |reply|
       = render 'comments/comment', locals: { comment: reply }
