@@ -8,7 +8,7 @@ class Book
   field :taken_count, type: Integer, default: 0
   field :avatar, type: String
 
-  validates_presence_of :name, :description, :author
+  validates_presence_of :name, :description, :author, :state
 
   has_many :comments
   has_many :histories, dependent: :destroy

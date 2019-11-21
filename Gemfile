@@ -28,6 +28,7 @@ gem 'devise'
 gem 'carrierwave', '~> 2.0'
 gem 'carrierwave-mongoid'
 gem 'faker'
+gem 'shoulda-matchers'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
