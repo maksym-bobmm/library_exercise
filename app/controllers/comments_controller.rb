@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, except: [:show]
   def new
     byebug
   end
@@ -18,7 +19,6 @@ class CommentsController < ApplicationController
 
   def update
     return unless params['body']
-
     comment = Comment.find(params['comment_id'])
     comment.update(body: params['body'])
     book = Book.find(params['id'])

@@ -7,8 +7,7 @@
     .comment-footer.text-left
       = link_to 'Reply', '#create-comment', 'data-comment_id': locals[:comment].id, class: 'Reply',
         onclick: 'reply_click(event); return false;'
-      = link_to 'Edit', '#', 'data-toggle': 'modal', 'data-target': "#edit-comment_locals[:comment].id.to_s",
-        'data-comment_id': locals[:comment].id.to_s
-      = render 'comments/edit', comment_id: locals[:comment].id.to_s
+      = link_to 'Edit', '#', 'data-toggle': 'modal', 'data-target': '#edit-comment', class: 'comment-edit-link',
+        'data-comment_id': locals[:comment].id.to_s, onclick: 'edit_click(event); return false;'
     - locals[:comment].comments.each do |reply|
       = render 'comments/comment', locals: { comment: reply }

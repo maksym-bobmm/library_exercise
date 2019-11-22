@@ -29,3 +29,10 @@ function reply_click(event) {
     }
     form.scrollIntoView();
 }
+function edit_click(event) {
+    let form = document.getElementById('update-comment');
+    let input = form.querySelector("input[name='comment_id']");
+    input.value = event.currentTarget.dataset.comment_id;
+    // debugger;
+
+}
