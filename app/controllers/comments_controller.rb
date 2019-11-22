@@ -22,7 +22,13 @@ class CommentsController < ApplicationController
     comment = Comment.find(params['comment_id'])
     comment.update(body: params['body'])
     book = Book.find(params['id'])
-    redirect_to book_path(book)
+
+    if request.xhr?
+      # byebug
+      render json: { body: comment.body }
+    else
+      redirect_to book_path(book)
+    end
   end
 
   def destroy

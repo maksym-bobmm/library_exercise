@@ -14,6 +14,11 @@ $(document).on('turbolinks:load', function() {
         });
     });
 });
+$(function() {
+    $('body').on('ajax:success', '.comment-edit-link', function(event) {
+        debugger;
+    });
+});
 function reply_click(event) {
     let form = document.getElementById('create-comment');
     let parent_comment_id = event.currentTarget.dataset.comment_id;
