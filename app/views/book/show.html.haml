@@ -27,3 +27,8 @@
     - @parent_comments.each do |comment|
       = render 'comments/comment', locals: { comment: comment }
   = render 'comments/edit'
+  -#= form_with url: comment_path, method: :patch, id: 'update-comment', remote: true do
+  -#  = text_area_tag :body, nil, placeholder: 'comment`s text', class: 'comment_text'
+  -#  = hidden_field_tag 'comment_id', 'comment_id'
+  -#  = hidden_field_tag 'user_id', current_user.id
+  -#  = submit_tag :'Save changes', form: 'update-comment', class: 'btn btn-primary', data: { "disable-with": "Saving..." }
