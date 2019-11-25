@@ -1,13 +1,14 @@
-= content_tag(:div, class: (locals[:comment].has_parent? ? 'nested_comment' : 'comment'), id: locals[:comment].id.to_s) do
+-#= byebug
+= content_tag(:div, class: (comment.has_parent? ? 'nested_comment' : 'comment'), id: comment.id.to_s) do
   .comment-header.text-left
-    %span.text-left=locals[:comment].user.username? ? locals[:comment].user.username : locals[:comment].user.email
-    %time=locals[:comment].updated_at.to_formatted_s(:short)
+    %span.text-left=comment.user.username? ? comment.user.username : comment.user.email
+    %time=comment.updated_at.to_formatted_s(:short)
   .comment-body
-    %p.text-break.text-monospace.text-justify=locals[:comment].body
+    %p.text-break.text-monospace.text-justify=comment.body
   .comment-footer.text-left
-    = link_to 'Reply', '#create-comment', 'data-comment_id': locals[:comment].id, class: 'Reply',
+    = link_to 'Reply', '#create-comment', 'data-comment_id': comment.id, class: 'Reply',
       onclick: 'reply_click(event); return false;'
     = link_to 'Edit', '#', 'data-toggle': 'modal', 'data-target': '#edit-comment', class: 'comment-edit-link',
-      'data-comment_id': locals[:comment].id.to_s, onclick: 'edit_click(event); return false;'
-  - locals[:comment].comments.each do |reply|
-    = render 'comments/comment', locals: { comment: reply }
+      'data-comment_id': comment.id.to_s, onclick: 'edit_click(event); return false;'
+  - comment.comments.each do |reply|
+    = render 'comments/comment', comment: reply

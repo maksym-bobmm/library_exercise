@@ -7,11 +7,20 @@ class CommentsController < ApplicationController
   def create
     book = Book.find(params['book_id'])
     if params['parent_comment_id']
-      book.comments.find(params['parent_comment_id']).comments.create(nested_comments_params)
+      comment = book.comments.find(params['parent_comment_id']).comments.new(nested_comments_params)
     else
-      book.comments.create!(comments_params)
+      comment = book.comments.new(comments_params)
     end
-    redirect_to book
+    comment.save
+    byebug
+    respond_to {|f| f.json {render comment}}
+    # respond_to do |format|
+    #   # byebug
+    #   format.json { render html: helpers.render('comments/comment', comment: comment) }
+    # end
+    # render json: { parent_comment_id: helpers.render('comments/comment', comment: comment) }
+    # redirect_to book
+
   end
 
   def edit

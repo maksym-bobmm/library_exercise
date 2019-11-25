@@ -25,7 +25,7 @@
     = render 'comments/new', book: @book
   .container.red_left
     - @parent_comments.each do |comment|
-      = render 'comments/comment', locals: { comment: comment }
+      = render 'comments/comment', comment: comment
   = render 'comments/edit'
   -#= form_with url: comment_path, method: :patch, id: 'update-comment', remote: true do
   -#  = text_area_tag :body, nil, placeholder: 'comment`s text', class: 'comment_text'
