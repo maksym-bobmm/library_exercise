@@ -10,7 +10,4 @@ class Comment
   belongs_to :user
   scope :parents, -> { where(parent: nil) }
   scope :children, -> { where(:parent.exists => true) }
-
-
-  # recursively_embeds_many
 end

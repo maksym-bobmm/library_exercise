@@ -18,25 +18,40 @@ $(document).on('turbolinks:load', function() {
             let comment_id = this.querySelector("input[name='comment_id']").value;
             let comment = document.getElementById(comment_id);
             comment_body = comment.getElementsByClassName('comment-body')[0];
+            comment_update_date = comment.getElementsByClassName('update-date')[0];
+            comment_update_date.innerText = 'updated at ' + event.detail[0].update_date;
             comment_body.firstElementChild.textContent = event.detail[0].body;
             $('#edit-comment').modal('hide')
+        });
+        body.on('ajax:success', '#create-comment', function(event) {
+            let new_comment = event.detail[0];
+            let parent_id_input = this.querySelector("input[name='parent_comment_id']");
+            let parent_element = parent_id_input !== null ?
+                document.getElementById(parent_id_input.value) :
+                document.getElementById('comments');
+            parent_element.insertAdjacentHTML('beforeend', new_comment);
+            document.getElementById('body').value = '';
+            let last_Child = parent_element.lastChild;
+            if(parent_id_input !== null)
+                this.removeChild(parent_id_input);
+            last_Child.scrollIntoView();
+            last_Child.style.backgroundColor = "#44aa44";
+            setTimeout(function () {
+                last_Child.style.backgroundColor = "";
+            }, 200);
+
+        });
+        body.on('ajax:success', '.comment-delete-link', function(event) {
+            parentDiv = this.parentNode.parentNode;
+            parentDiv.parentNode.removeChild(parentDiv);
         });
         body.on('click', '.comment-edit-link', function() {
             let text = document.getElementById('comment_edit-text_field');
             text.value = '';
         });
-        // body.on('click', '.Reply', reply_click);
     });
 });
-// $(document).ready(function() {
-//     return $(".update-comment").on("ajax:success", function (event) {
-//         var data, ref, status, xhr;
-//         ref = event.detail, data = ref[0], status = ref[1], xhr = ref[2];
-//         return $("#new_article").append(xhr.responseText);
-//     });
-// });
 function reply_click(event) {
-    // debugger;
     let form = document.getElementById('create-comment');
     let parent_comment_id = event.currentTarget.dataset.comment_id;
     let input = form.querySelector("input[name='parent_comment_id']");

@@ -4,4 +4,4 @@
     %br
     = hidden_field_tag 'book_id', @book.id
     = hidden_field_tag 'user_id', current_user.id
-    = submit_tag 'post comment'
+    = submit_tag 'post comment', data: { disable_with: "Saving..." }

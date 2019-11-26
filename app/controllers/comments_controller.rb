@@ -12,15 +12,8 @@ class CommentsController < ApplicationController
       comment = book.comments.new(comments_params)
     end
     comment.save
-    byebug
-    respond_to {|f| f.json {render comment}}
-    # respond_to do |format|
-    #   # byebug
-    #   format.json { render html: helpers.render('comments/comment', comment: comment) }
-    # end
-    # render json: { parent_comment_id: helpers.render('comments/comment', comment: comment) }
-    # redirect_to book
-
+    new_comment = helpers.render('comments/comment', comment: comment)
+    render json: new_comment
   end
 
   def edit
@@ -33,18 +26,21 @@ class CommentsController < ApplicationController
     book = Book.find(params['id'])
 
     if request.xhr?
-      # byebug
-      render json: { body: comment.body }
+      render json: { body: comment.body, update_date: comment.updated_at.to_formatted_s(:short) }
     else
       redirect_to book_path(book)
     end
   end
 
   def destroy
+    return unless params['id']
+
+    comment = Comment.find(params['id'])
+    comment.destroy
+
   end
 
   def show
-    # @comments = Comment.all
   end
 
   private

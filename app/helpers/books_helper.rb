@@ -26,7 +26,6 @@ module BooksHelper
   end
 
   def draw_take_button(book)
-    # byebug
     if book.state || !user_signed_in?
       button_name = 'Take'
       css_class = 'bg-success'
