@@ -28,7 +28,6 @@ gem 'devise'
 gem 'carrierwave', '~> 2.0'
 gem 'carrierwave-mongoid'
 gem 'faker'
-gem 'shoulda-matchers'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -51,6 +50,11 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'factory_bot_rails'
+end
+
+group :test do
+  gem 'shoulda-matchers'
   gem 'mongoid-rspec'
 end
 

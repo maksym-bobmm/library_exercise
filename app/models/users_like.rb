@@ -4,5 +4,6 @@ class UsersLike
   field :score, type: Integer
   embedded_in :book
 
-  validates_uniqueness_of :user_id
+  validates :user_id, presence: true, uniqueness: true
+  validates :score, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 6 }
 end

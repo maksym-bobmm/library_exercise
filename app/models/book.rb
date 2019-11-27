@@ -9,6 +9,7 @@ class Book
   field :avatar, type: String
 
   validates_presence_of :name, :description, :author, :state
+  validates :taken_count, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   has_many :comments
   has_many :histories, dependent: :destroy
@@ -17,6 +18,7 @@ class Book
   def likes_sum
     users_likes.sum(:score)
   end
+
   def rating
     return 0 if users_likes.size == 0
 

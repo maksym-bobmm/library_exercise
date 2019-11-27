@@ -40,6 +40,6 @@ class User
   # field :locked_at,       type: Time
   field :name, type: String
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :histories, dependent: :destroy
 end
