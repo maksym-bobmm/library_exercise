@@ -11,7 +11,7 @@ class Book
   validates_presence_of :name, :description, :author, :state
   validates :taken_count, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :histories, dependent: :destroy
   embeds_many :users_likes
 

@@ -29,7 +29,7 @@ module BooksHelper
     if book.state || !user_signed_in?
       button_name = 'Take'
       css_class = 'bg-success'
-      disabled = false
+      disabled = !user_signed_in?
       action = 'take'
     else
       taked_user_id = book.histories.any? ? book.histories.last.user_id.to_s : current_user.id.to_s

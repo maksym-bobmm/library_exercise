@@ -3,5 +3,5 @@
     = text_area_tag :body, nil, placeholder: 'comment`s text'
     %br
     = hidden_field_tag 'book_id', @book.id
-    = hidden_field_tag 'user_id', current_user.id
-    = submit_tag 'post comment', data: { disable_with: "Saving..." }
+    = hidden_field_tag 'user_id', current_user.id if user_signed_in?
+    = submit_tag 'post comment', data: { disable_with: "Saving..." }, disabled: (user_signed_in? ? false : true)
