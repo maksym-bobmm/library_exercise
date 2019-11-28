@@ -10,7 +10,7 @@ class Book
 
   validates_presence_of :name, :description, :author, :state
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :histories, dependent: :destroy
   embeds_many :users_likes
 

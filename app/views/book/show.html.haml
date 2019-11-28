@@ -24,6 +24,7 @@
   .comment-create
     = render 'comments/new', book: @book
   .container.red_left#comments
-    - @parent_comments.each do |comment|
-      = render 'comments/comment', comment: comment
-  = render 'comments/edit'
+    - if @book.comments.size.positive?
+      - @parent_comments.each do |comment|
+        = render 'comments/comment', comment: comment
+      = render 'comments/edit'
