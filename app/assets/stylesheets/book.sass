@@ -22,3 +22,43 @@ li
   padding: 10px
 #comment_edit-text_field
   min-width: 100%
+//.filled_star
+//  @extend .fas
+//  @extend .fa-star
+//  @extend .fa-5x
+
+//.filled_stars
+//  @include filled_star
+//.book_show-title
+//  font-size: 3em
+//.test
+//  background-color: red
+
+
+@include media-breakpoint-only(xs)
+  .book_show-title
+    font-size: 3em
+  .test
+    background-color: yellow
+
+@include media-breakpoint-only(sm)
+  .book_show-title
+    font-size: 1em
+  .test
+    background-color: orange
+
+@include media-breakpoint-only(md)
+  .test
+    background-color: green
+
+@include media-breakpoint-only(lg)
+  .test
+    background-color:  purple
+@include media-breakpoint-only(xl)
+  .test
+    background-color:  red
+
+
+//@media (max-width: 600px)
+//  .test
+//    background-color: yellow

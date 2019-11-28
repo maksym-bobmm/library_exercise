@@ -4,7 +4,7 @@ module BooksHelper
   end
 
   def filled_rating_tags(like_score, book)
-    link_to raw('<i class="fas fa-star fa-2x"></i>'), rating_index_path(score: like_score, book_id: book.id),
+    link_to content_tag(:i, nil, class: 'fas fa-star fa-2x'), rating_index_path(score: like_score, book_id: book.id),
             method: :post, class: 'rating_link', remote: true
   end
 

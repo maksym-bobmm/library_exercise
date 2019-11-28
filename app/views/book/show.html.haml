@@ -1,8 +1,10 @@
 %script{src: "https://kit.fontawesome.com/0b512414c4.js", crossorigin: "anonymous"}
-.container-fluid
-  %h4.text-center=@book.name
+.container-fluid.test
   .row
-    .col.text-right
+    .col-12
+      %h6.text-center.book_show-title=@book.name
+  .row
+    .col-12.col-md-3.text-right
       %button.btn.btn-info{ type: 'button' }
         Average rating
         %span.badge.badge-primary=@book.rating
@@ -13,13 +15,13 @@
           %span.badge.badge-warning= @likes_count
       %br
       = image_tag(@book.avatar.thumb.to_s, alt: 'avatar')
-    .col.text-left
+    .col-12.col-md.text-left
       %span.rating= draw_rating(@rating_score, @book)
       = draw_take_button(@book)
       %br
       %p=@book.description
 
-  .col.text-center
+  .col-md-12.text-center
     = link_to 'back', book_index_path
   .comment-create
     = render 'comments/new', book: @book
