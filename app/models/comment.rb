@@ -8,6 +8,6 @@ class Comment
   belongs_to :parent, class_name: 'Comment', optional: true
   belongs_to :book
   belongs_to :user
-  # scope :parents, -> { where(parent: nil) }
+  scope :parent_comments, -> { where(parent: nil) }
   # scope :children, -> { where(:parent.exists => true) }
 end

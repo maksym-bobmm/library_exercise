@@ -35,7 +35,7 @@ class BookController < ApplicationController
     liked = @book.users_likes.where(user_id: current_user&.id).exists?
     @rating_score = liked ? @book.users_likes.find_by(user_id: current_user&.id).score : 0
     @likes_count = @book.users_likes.size
-    @parent_comments = @book.comments.parents
+    @parent_comments = @book.comments.parent_comments
   end
 
   def take
