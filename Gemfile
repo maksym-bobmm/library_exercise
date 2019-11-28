@@ -28,7 +28,6 @@ gem 'devise'
 gem 'carrierwave', '~> 2.0'
 gem 'carrierwave-mongoid'
 gem 'faker'
-gem 'rails_12factor', group: :production
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
