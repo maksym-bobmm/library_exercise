@@ -1,22 +1,28 @@
 %script{src: "https://kit.fontawesome.com/0b512414c4.js", crossorigin: "anonymous"}
-.container-fluid.test
+.container-fluid
   .row
     .col-12
       %h6.text-center.book_show-title=@book.name
   .row
-    .col-12.col-md-3.text-right
-      %button.btn.btn-info{ type: 'button' }
-        Average rating
-        %span.badge.badge-primary=@book.rating
-      %br
-      %span
-        %button.btn.btn-info{ type: 'button' }
-          Likes:
-          %span.badge.badge-warning= @likes_count
-      %br
+    .col-12.col-md-6.text-center.text-md-right.order-2.order-md-1.my-2
       = image_tag(@book.avatar.thumb.to_s, alt: 'avatar')
-    .col-12.col-md.text-left
-      %span.rating= draw_rating(@rating_score, @book)
+
+    .col-12.col-md-6.text-left.order-1.order-md-1.text-center.text-md-left
+      .col-12.d-flex.align-items-center.justify-content-center.justify-content-md-start
+        %span.rating= draw_rating(@rating_score, @book)
+
+        %span
+          %span{ 'data-toggle': 'tooltip', 'data-placement': 'right', title: 'Average rating' }= @book.rating.to_f
+          %br
+          %span{ 'data-toggle': 'tooltip', 'data-placement': 'right', title: 'likes count' }= @likes_count
+        %a.fas.fa-question-circle.fa-2x{ tabindex: '0', 'data-toggle': 'popover', 'data-trigger': 'hover',
+                                         'data-placement': 'left', 'data-html': 'true', 'data-container': 'body',
+                                         'data-content': "Average rating <br/> likes count", trigger: 'hover'}
+      .col-md-6.text-left.order-md-3.text-md-left.d-none.d-md-block
+        = draw_take_button(@book)
+        %br
+        %p=@book.description
+    .col-12.text-left.order-3.text-center.d-md-none.d-block
       = draw_take_button(@book)
       %br
       %p=@book.description

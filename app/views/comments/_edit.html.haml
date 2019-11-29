@@ -9,7 +9,7 @@
         = form_with url: comment_path, method: :patch, id: 'update-comment', remote: true do
           = text_area_tag :body, nil, placeholder: 'comment`s text', id: 'comment_edit-text_field'
           = hidden_field_tag 'comment_id', 'comment_id'
-          = hidden_field_tag 'user_id', current_user.id
+          = hidden_field_tag 'user_id', current_user.id if user_signed_in?
       .modal-footer
         %button.btn.btn-secondary{'data-dismiss': 'modal'} Close
         = submit_tag :'Save changes', form: 'update-comment', class: 'btn btn-primary',

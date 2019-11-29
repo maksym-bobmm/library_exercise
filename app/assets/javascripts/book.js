@@ -49,6 +49,9 @@ $(document).on('turbolinks:load', function() {
             let text = document.getElementById('comment_edit-text_field');
             text.value = '';
         });
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
     });
 });
 function reply_click(event) {

@@ -22,39 +22,47 @@ li
   padding: 10px
 #comment_edit-text_field
   min-width: 100%
-//.filled_star
-//  @extend .fas
-//  @extend .fa-star
-//  @extend .fa-5x
 
-//.filled_stars
-//  @include filled_star
-//.book_show-title
-//  font-size: 3em
-//.test
-//  background-color: red
-
+.over-under
+  position: relative
+  top: 1em
+  display: inline-block
+span.over-under > span
+  display: table-row
 
 @include media-breakpoint-only(xs)
-  .book_show-title
-    font-size: 3em
+  .book_show-title, .star-image, .take-button
+    font-size: 2.7em
+  .space
+    .text-center
   .test
     background-color: yellow
-
 @include media-breakpoint-only(sm)
-  .book_show-title
-    font-size: 1em
+  .book_show-title, .star-image, .take-button
+    font-size: 3em
   .test
     background-color: orange
 
 @include media-breakpoint-only(md)
+  .book_show-title, .star-image, .take-button
+    font-size: 2em
+  .space
+    .text-right
   .test
     background-color: green
 
 @include media-breakpoint-only(lg)
+  .book_show-title, .star-image, .take-button
+    font-size: 2em
+  .space
+    .text-right
   .test
     background-color:  purple
 @include media-breakpoint-only(xl)
+  .book_show-title, .star-image, .take-button
+    font-size: 2em
+  .space
+    .text-right
   .test
     background-color:  red
 
@@ -62,3 +70,5 @@ li
 //@media (max-width: 600px)
 //  .test
 //    background-color: yellow
+
+$enable-responsive-font-sizes: true

@@ -8,5 +8,6 @@
 (1..10).each do
   Book.create(name: Faker::Book.title,
               description: Faker::Lorem.paragraph(sentence_count: 5, supplemental: true, random_sentences_to_add: 20),
-              author: Faker::Book.author)
+              author: Faker::Book.author,
+              remote_avatar_url: Faker::Avatar.image( size: "450x450" ) )
 end
