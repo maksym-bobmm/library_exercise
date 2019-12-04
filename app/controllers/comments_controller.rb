@@ -1,8 +1,5 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  def new
-    byebug
-  end
 
   def create
     book = Book.find(params['book_id'])
@@ -16,15 +13,11 @@ class CommentsController < ApplicationController
     render json: new_comment
   end
 
-  def edit
-  end
-
   def update
     return unless params['body']
     comment = Comment.find(params['comment_id'])
     comment.update(body: params['body'])
     book = Book.find(params['id'])
-
     if request.xhr?
       render json: { body: comment.body, update_date: comment.updated_at.to_formatted_s(:short) }
     else
@@ -37,10 +30,6 @@ class CommentsController < ApplicationController
 
     comment = Comment.find(params['id'])
     comment.destroy
-
-  end
-
-  def show
   end
 
   private
