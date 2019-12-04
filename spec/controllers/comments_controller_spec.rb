@@ -60,6 +60,33 @@ RSpec.describe CommentsController, type: :controller do
       end
     end
   end
+  describe 'html response code' do
+    before do
+      @user = create(:user)
+      @book = create(:book)
+    end
+    let!(:comment) { create(:comment, book_id: @book.id, user_id: @user.id) }
+
+    context 'signed in user', :js => true do
+      before(:each) { sign_in @user }
+      it 'gets 200 on POST comment#create' do
+        post :create, params: { book_id: @book.id, user_id: @user.id, body: 'test' }
+        is_expected.to respond_with(200)
+      end
+      it 'gets 200 on PATCH comment#update' do
+        patch :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
+        is_expected.to respond_with(200)
+      end
+      it 'gets 200 on PUT comment#update' do
+        put :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
+        is_expected.to respond_with(200)
+      end
+      it 'gets 200 on DELETE comment#destroy' do
+      delete :destroy, params: { id: comment.id }
+        is_expected.to respond_with(200)
+      end
+    end
+  end
   #describe "GET #new" do
   #  it "returns http success" do
   #    get :new
