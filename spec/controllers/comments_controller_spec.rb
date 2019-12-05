@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
-
+  before(:all) do
+    @user = create(:user)
+    @book = create(:book)
+  end
   describe 'route' do
     it { is_expected.to route(:post, '/comments').to(action: :create) }
     it { is_expected.to route(:patch, '/comments/1').to(action: :update, id: 1) }
@@ -9,10 +12,7 @@ RSpec.describe CommentsController, type: :controller do
     it { is_expected.to route(:delete, '/comments/1').to(action: :destroy, id: 1) }
   end
   describe 'action tests check that' do
-    before do
-      @user = create(:user)
-      @book = create(:book)
-    end
+
     let!(:comment) { create(:comment, book_id: @book.id, user_id: @user.id) }
     context 'not signed in user' do
       it 'do not delete comment on DELETE Comment#destoy' do
@@ -61,10 +61,6 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
   describe 'html response code' do
-    before do
-      @user = create(:user)
-      @book = create(:book)
-    end
     let!(:comment) { create(:comment, book_id: @book.id, user_id: @user.id) }
 
     context 'signed in user', :js => true do
@@ -73,19 +69,52 @@ RSpec.describe CommentsController, type: :controller do
         post :create, params: { book_id: @book.id, user_id: @user.id, body: 'test' }
         is_expected.to respond_with(200)
       end
-      it 'gets 200 on PATCH comment#update' do
+      it 'gets 302 on PATCH comment#update' do
         patch :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
-        is_expected.to respond_with(200)
+        is_expected.to respond_with(302)
       end
-      it 'gets 200 on PUT comment#update' do
+      it 'gets 302 on PUT comment#update' do
         put :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
-        is_expected.to respond_with(200)
+        is_expected.to respond_with(302)
       end
       it 'gets 200 on DELETE comment#destroy' do
       delete :destroy, params: { id: comment.id }
         is_expected.to respond_with(200)
       end
     end
+    context 'not signed in user', :js => true do
+      before(:each) { sign_in @user }
+      it 'gets 200 on POST comment#create' do
+        post :create, params: { book_id: @book.id, user_id: @user.id, body: 'test' }
+        is_expected.to respond_with(200)
+      end
+      it 'gets 302 on PATCH comment#update' do
+        patch :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
+        is_expected.to respond_with(302)
+      end
+      it 'gets 302 on PUT comment#update' do
+        put :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
+        is_expected.to respond_with(302)
+      end
+      it 'gets 200 on DELETE comment#destroy' do
+        delete :destroy, params: { id: comment.id }
+        is_expected.to respond_with(200)
+      end
+    end
+  end
+  describe 'params' do
+    before do
+      @params =  {
+          body: Faker::Lorem.word,
+          user_id: @user.id,
+          book_id: @book.id,
+          some_text: 'some var',
+          number: 42,
+          id: @book.id
+      }
+    end
+    xit { is_expected.to permit(:body, :user_id).for(:create, params: @params) }
+    xit { is_expected.to permit(:body, :user_id, :book_id).for(:update, params: @params) }
   end
   #describe "GET #new" do
   #  it "returns http success" do

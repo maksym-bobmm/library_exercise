@@ -95,7 +95,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 # clear database through its deleting
-  config.after(:all) do
+  config.after(:suite) do
     Mongoid.purge!
   end
 end

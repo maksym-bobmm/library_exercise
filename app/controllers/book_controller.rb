@@ -8,6 +8,8 @@ class BookController < ApplicationController
   def new; end
 
   def create
+    return unless user_signed_in?
+
     if Book.create(book_params)
       redirect_to book_index_path
     else
@@ -16,6 +18,8 @@ class BookController < ApplicationController
   end
 
   def destroy
+    return unless user_signed_in?
+
     Book.find(params['id']).delete
     redirect_to book_index_path
   end
