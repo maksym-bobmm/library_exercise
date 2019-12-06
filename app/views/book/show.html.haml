@@ -35,4 +35,4 @@
     - if @book.comments.size.positive?
       - @parent_comments.each do |comment|
         = render 'comments/comment', comment: comment
-      = render 'comments/edit'
+    = render 'comments/edit'

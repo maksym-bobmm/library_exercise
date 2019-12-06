@@ -2,8 +2,9 @@
   .row
     .col
       %h1.text-center Library
-      .text-center
-        = link_to 'create book', new_book_path
+      - if user_signed_in?
+        .text-center
+          = link_to 'create book', new_book_path
       .top-books
         %h5.text-center Top rated books
         = render 'table', books: @top_books
