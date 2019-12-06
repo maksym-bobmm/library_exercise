@@ -29,7 +29,9 @@
 
   .col-md-12.text-center
     = link_to 'back', book_index_path
-  .comment-create
+  .comment-create.text-center
+    = link_to 'Create comment', '#', 'data-toggle': 'modal', 'data-target': '#new-comment',
+               class: 'comment-reply-link btn btn-primary'
     = render 'comments/new', book: @book
   .container.red_left#comments
     - if @book.comments.size.positive?

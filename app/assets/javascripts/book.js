@@ -30,7 +30,7 @@ $(document).on('turbolinks:load', function() {
                 document.getElementById(parent_id_input.value) :
                 document.getElementById('comments');
             parent_element.insertAdjacentHTML('beforeend', new_comment);
-            document.getElementById('body').value = '';
+            document.getElementById('comment_create-text_field').value = '';
             let last_Child = parent_element.lastChild;
             if(parent_id_input !== null)
                 this.removeChild(parent_id_input);
@@ -39,6 +39,7 @@ $(document).on('turbolinks:load', function() {
             setTimeout(function () {
                 last_Child.style.backgroundColor = "";
             }, 200);
+            $('#new-comment').modal('hide')
 
         });
         body.on('ajax:success', '.comment-delete-link', function(event) {

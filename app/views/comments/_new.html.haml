@@ -1,7 +1,26 @@
-.text-center
-  =form_with model: Comment.new, id: 'create-comment' do
-    = text_area_tag :body, nil, placeholder: 'comment`s text', rows: 4, class: 'w-50 text-center'
-    %br
-    = hidden_field_tag 'book_id', @book.id
-    = hidden_field_tag 'user_id', current_user.id if user_signed_in?
-    = submit_tag 'post comment', data: { disable_with: "Saving..." }, disabled: (user_signed_in? ? false : true)
+-#.text-center
+-#  =form_with model: Comment.new, id: 'create-comment' do
+-#    = text_area_tag :body, nil, placeholder: 'comment`s text', rows: 4, class: 'w-50 text-center'
+-#    %br
+-#    = hidden_field_tag 'book_id', @book.id
+-#    = hidden_field_tag 'user_id', current_user.id if user_signed_in?
+-#    = submit_tag 'post comment', data: { disable_with: "Saving..." }, disabled: (user_signed_in? ? false : true)
+-#
+.modal.fade{ tabindex: '-1', role: 'dialog', id: 'new-comment'}
+  .modal-dialog{ role: 'document' }
+    .modal-content
+      .modal-header.text-center
+        %h5.modal-title#exampleModalLabel Create comment
+        %button.close{ type: 'button', 'data-dismiss': 'modal' }
+          %span( aria-hidden="true") &times
+      .modal-body
+        =form_with model: Comment.new, id: 'create-comment' do
+          = text_area_tag :body, nil, placeholder: 'comment`s text', rows: 4, class: 'w-50 text-center',
+                          id: 'comment_create-text_field'
+          %br
+          = hidden_field_tag 'book_id', @book.id
+          = hidden_field_tag 'user_id', current_user.id if user_signed_in?
+      .modal-footer
+        %button.btn.btn-secondary{'data-dismiss': 'modal'} Close
+        = submit_tag :'Post comment', form: 'create-comment', class: 'btn btn-primary',
+                     data: { disable_with: "Saving..." }

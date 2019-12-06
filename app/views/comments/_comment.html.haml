@@ -6,8 +6,8 @@
     %p.text-break.text-monospace.text-justify=comment.body
   .comment-footer.text-left
     - if user_signed_in?
-      = link_to 'Reply', '#create-comment', 'data-comment_id': comment.id, class: 'comment-reply-link',
-        onclick: 'reply_click(event); return false;'
+      = link_to 'Reply', '#', 'data-toggle': 'modal', 'data-target': '#new-comment', 'data-comment_id': comment.id,
+                class: 'comment-reply-link', onclick: 'reply_click(event); return false;'
       - if current_user.id == comment.user.id
         = link_to 'Edit', '#', 'data-toggle': 'modal', 'data-target': '#edit-comment', class: 'comment-edit-link',
           'data-comment_id': comment.id.to_s, onclick: 'edit_click(event); return false;'
