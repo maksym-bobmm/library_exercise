@@ -25,7 +25,7 @@ class BookController < ApplicationController
   end
 
   def destroy_multiple
-    return unless params['books_ids'].present?
+    return unless params['books_ids'].present? && user_signed_in?
 
     ids = params['books_ids']
     ids.each do |id|
@@ -46,6 +46,8 @@ class BookController < ApplicationController
     return unless user_signed_in?
 
     book = Book.find(params['book_id'])
+    return if book.state == false
+
     book.update_attributes(state: false)
     book.histories.create(user_id: current_user.id, take_date: Time.now )
     if request.xhr?
@@ -59,6 +61,8 @@ class BookController < ApplicationController
     return unless user_signed_in?
 
     book = Book.find(params['book_id'])
+    return if book.state == true
+
     book.update_attributes(state: true)
     book.histories.all.last.update_attributes(return_date: Time.now) if book.histories.any?
     if request.xhr?

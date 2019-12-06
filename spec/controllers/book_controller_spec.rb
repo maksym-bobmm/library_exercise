@@ -16,7 +16,7 @@ RSpec.describe BookController, type: :controller do
   end
   describe 'action' do
     before(:all) { @user = create(:user) }
-    before(:each) { |test| sign_in(@user) unless test.metadata[:not_signed_user] }
+    before(:each) { |test| sign_in(@user) unless test.metadata[:not_signed_in_user] }
     let(:book) { create(:book) }
 
     context '#index' do
@@ -89,18 +89,111 @@ RSpec.describe BookController, type: :controller do
           delete :destroy, params: { id: book_for_delete.id }
         }.to change(Book, :count).by(-1)
       end
-      it 'does no changes count after delete by not signed in user', :not_signed_user do
+      it 'does no changes count after delete by not signed in user', :not_signed_in_user do
         expect {
           delete :destroy, params: { id: book_for_delete.id }
         }.not_to change(Book, :count)
       end
     end
     context '#take' do
-      xit do
-        byebug
-        expect {
+      it 'is expected to change `Book#state` by signed in user' do
+        expect{
           post :take, params: { book_id: book.id }
+          book.reload
         }.to change(book, :state)
+      end
+      it 'is expected to change `History.count` by 1 with signed in user' do
+        expect{
+          post :take, params: { book_id: book.id }
+        }.to change(History, :count).by(1)
+      end
+      it 'is expected not to change `Book#state` by not signed in user', :not_signed_in_user do
+        expect{
+          post :take, params: { book_id: book.id }
+          book.reload
+        }.to_not change(book, :state)
+      end
+      it 'is expected not to change `History.count` with not signed in user', :not_signed_in_user do
+        expect{
+          post :take, params: { book_id: book.id }
+        }.to_not change(History, :count)
+      end
+      it 'is expected not to change `Book#state` if book`s state is already false', :not_signed_in_user do
+        expect{
+          book.state = false
+          post :take, params: { book_id: book.id }
+          book.reload
+        }.to_not change(book, :state)
+      end
+      it 'is expected not to change `History.count` if book`s state is already false', :not_signed_in_user do
+        expect{
+          book.state = false
+          post :take, params: { book_id: book.id }
+        }.to_not change(History, :count)
+      end
+    end
+    context '#return' do
+      let(:history) { create(:history_take_only, user_id: @user.id, book_id: book.id) }
+      before(:each) { book.update_attributes(state: false) }
+      it 'is expected to change `Book#state` by signed in user' do
+        expect{
+          post :return, params: { book_id: book.id }
+          book.reload
+        }.to change(book, :state)
+      end
+      it 'is expected to change return_date in last history record by signed in user' do
+        history
+        expect{
+          post :return, params: { book_id: book.id }
+        }.to change { book.histories.last.return_date }
+      end
+      it 'is expected not to change `Book#state` by not signed in user', :not_signed_in_user do
+        expect{
+          post :return, params: { book_id: book.id }
+          book.reload
+        }.to_not change(book, :state)
+      end
+      it 'is expected not to change `History.count` with not signed in user', :not_signed_in_user do
+        expect{
+          post :return, params: { book_id: book.id }
+        }.to_not change(History, :count)
+      end
+      it 'is expected not to change `Book#state` if book`s state is already true', :not_signed_in_user do
+        expect{
+          book.state = false
+          post :return, params: { book_id: book.id }
+          book.reload
+        }.to_not change(book, :state)
+      end
+      it 'is expected not to change `History.count` if book`s state is already true', :not_signed_in_user do
+        expect{
+          book.state = false
+          post :return, params: { book_id: book.id }
+        }.to_not change(History, :count)
+      end
+    end
+    context '#destroy_multiple' do
+      before(:each) do |example|
+        unless example.metadata[:no_ids]
+          3.times { create(:book) }
+          @ids = Array.new(1){ Book.first.id.to_s}
+          @ids << Book.last.id.to_s
+        end
+      end
+      it 'is expected to change `Book.count` by -2 by signed in user' do
+        expect{
+          post :destroy_multiple, params: { books_ids: @ids }
+        }.to change(Book, :count).by(-2)
+      end
+      it 'is expected not to change `Book.count` by signed in user', :not_signed_in_user do
+        expect{
+          post :destroy_multiple, params: { books_ids: @ids }
+        }.to_not change(Book, :count)
+      end
+      it 'is expected not to change `Book.count` without books_ids in params', :no_ids do
+        expect{
+          post :destroy_multiple
+        }.to_not change(Book, :count)
       end
     end
   end
