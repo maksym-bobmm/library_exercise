@@ -2,7 +2,6 @@ class BookController < ApplicationController
   def index
     @books = Book.order_by(name: :asc).page params[:page]
     @top_books = Book.order_by(rating: :desc).limit(5).to_a
-    @histories = History.all
   end
 
   def new; end

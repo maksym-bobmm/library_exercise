@@ -17,7 +17,7 @@
 li
   list-style-type: none
   padding: 10px
-#comment_edit-text_field, #comment_create-text_field
+#comment_edit-text_field, #comment_create-text_field, .book_create-text
   min-width: 100%
 
 .over-under
@@ -62,7 +62,33 @@ span.over-under > span
     .text-right
   .test
     background-color:  red
-
+body.modal-open
+  overflow: scroll
+.comment
+  margin: 10px 0
+  border-radius: 1em
+.comment-footer.text-left
+  background: silver
+  padding: 1em
+  border-left: 3px black solid
+  border-right: 3px black solid
+  border-bottom: 3px black solid
+  display: flex
+  justify-content: space-around
+.comment-header.text-left
+  background: #3a4249
+  color: white
+  border-radius: 1em 1em 0 0
+  padding: 1em
+  border-left: 3px black solid
+  border-right: 3px black solid
+  border-top: 3px black solid
+.comment-body
+  background: #e4e2e2
+  margin: 0px
+  padding: 1em
+  border-left: 3px black solid
+  border-right: 3px black solid
 
 //@media (max-width: 600px)
 //  .test

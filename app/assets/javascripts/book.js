@@ -39,22 +39,25 @@ $(document).on('turbolinks:load', function() {
         });
         body.on('ajax:success', '#create-comment', function(event) {
             let new_comment = event.detail[0];
-            let parent_id_input = this.querySelector("input[name='parent_comment_id']");
-            let parent_element = parent_id_input !== null ?
-                document.getElementById(parent_id_input.value) :
-                document.getElementById('comments');
-            parent_element.insertAdjacentHTML('beforeend', new_comment);
-            document.getElementById('comment_create-text_field').value = '';
-            let last_Child = parent_element.lastChild;
-            if(parent_id_input !== null)
-                this.removeChild(parent_id_input);
-            last_Child.scrollIntoView();
-            last_Child.style.backgroundColor = "#44aa44";
-            setTimeout(function () {
-                last_Child.style.backgroundColor = "";
-            }, 200);
-            $('#new-comment').modal('hide')
-
+            if(new_comment) {
+                let parent_id_input = this.querySelector("input[name='parent_comment_id']");
+                let parent_element = parent_id_input !== null ?
+                    document.getElementById(parent_id_input.value) :
+                    document.getElementById('comments');
+                parent_element.insertAdjacentHTML('beforeend', new_comment);
+                document.getElementById('comment_create-text_field').value = '';
+                let last_Child = parent_element.lastChild;
+                debugger;
+                if (parent_id_input !== null)
+                    this.removeChild(parent_id_input);
+                last_Child.style.backgroundColor = "#44aa44";
+                setTimeout(function () {
+                    last_Child.style.backgroundColor = "";
+                }, 200);
+                last_Child.scrollIntoView();
+                $('#new-comment').modal('hide');
+                // last_Child.focus();
+            }
         });
         body.on('ajax:success', '.comment-delete-link', function(event) {
             parentDiv = this.parentNode.parentNode;
@@ -66,6 +69,11 @@ $(document).on('turbolinks:load', function() {
         });
         $(document).ready(function(){
             $('[data-toggle="popover"]').popover();
+        });
+        $("#new-comment").on('shown.bs.modal', function(){
+            debugger;
+            $('#myInput').focus();
+            alert('The modal is about to be hidden.');
         });
     });
 });

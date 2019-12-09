@@ -39,7 +39,7 @@ RSpec.describe Book, type: :model do
         expect(subject.likes_sum).to be 15
       end
       it '\'rating\' returns correct rating' do
-        expect(subject.rating).to be 3
+        expect(subject.rating).to be 3.0
       end
     end
     it '\'rating\' returns 0 if there are no likes' do

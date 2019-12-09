@@ -39,3 +39,7 @@
       - @parent_comments.each do |comment|
         = render 'comments/comment', comment: comment
     = render 'comments/edit'
+  - if @book.histories.size.positive?
+    .history.mt-5
+      %h5.text-center History
+      = render 'history', histories: @book.histories

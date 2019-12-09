@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
 
   def create
+    return if params['body']&.empty?
     book = Book.find(params['book_id'])
     if params['parent_comment_id']
       comment = book.comments.find(params['parent_comment_id']).comments.new(nested_comments_params)

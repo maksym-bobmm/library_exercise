@@ -23,7 +23,6 @@ RSpec.describe BookController, type: :controller do
       before(:each) { get :index }
       it 'variables @books and @top_books are an instances of Mongoid::Criteria' do
         expect(@controller.instance_variable_get(:@books)).to be_instance_of(Mongoid::Criteria)
-        expect(@controller.instance_variable_get(:@histories)).to be_instance_of(Mongoid::Criteria)
       end
       it 'variable @top_books is an instance of Array' do
         expect(@controller.instance_variable_get(:@top_books)).to be_instance_of(Array)
