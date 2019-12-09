@@ -16,6 +16,6 @@
           %td
             = check_box_tag('books_ids[]', book.id)
         %td
-          = link_to 'delete', book_path(book), method: :delete
+          = link_to 'delete', book_path(book), method: :delete, remote: true
           = link_to 'show', book_path(book)
           -#= link_to 'edit', edit_book_path(book)

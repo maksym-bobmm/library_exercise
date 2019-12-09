@@ -21,7 +21,11 @@ class BookController < ApplicationController
     return unless user_signed_in?
 
     Book.find(params['id']).delete
-    redirect_to book_index_path
+    if request.xhr?
+      render json: { book_id: params['id'] }
+    else
+      redirect_to book_index_path
+    end
   end
 
   def destroy_multiple

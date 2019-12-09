@@ -11,6 +11,19 @@ $(document).on('turbolinks:load', function() {
                 document.getElementsByClassName("average_rating")[0].textContent = event.detail[0].average_rating;
             }
         });
+        body.on('ajax:success', '.books-list', function(event) {
+            let id = event.detail[0].book_id;
+            let booksDiv = document.getElementsByClassName('books-list');
+            let rows = [];
+            for (let div of booksDiv){
+                rows.push(div.getElementsByTagName('table')[0].children[1]);
+            }
+            for (let book of rows){
+                let deleted_book_name = book.querySelector(`a[href='/book/${id}']`);
+                if (deleted_book_name != null)
+                    book.removeChild(deleted_book_name.parentNode.parentNode);
+            }
+        });
         body.on('ajax:success', '.button_to', function(event) {
             if (event.detail[0].button != undefined)
                $('.button_to').replaceWith(event.detail[0].button);

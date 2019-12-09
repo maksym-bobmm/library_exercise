@@ -5,10 +5,10 @@
       - if user_signed_in?
         .text-center
           = link_to 'create book', new_book_path
-      .top-books
+      .top-books.books-list
         %h5.text-center Top rated books
         = render 'table', books: @top_books, top_table: true
-      .all-books
+      .all-books.books-list
         %h5.text-center All books
         =form_with url: destroy_multiple_book_index_path, method: :post do
           = render 'table', books: @books, top_table: false
