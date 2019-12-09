@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   end
   resources :rating, only: [:create]
   resources :comments, except: %i[index new edit show]
-  get '/rating', to: 'rating#create'
+  #get '/rating', to: 'rating#create'
   root 'book#index'
 end
