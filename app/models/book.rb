@@ -22,6 +22,6 @@ class Book
   def rating
     return 0 if users_likes.size == 0
 
-    likes_sum / users_likes.size
+    likes_sum / users_likes.size.to_f
   end
 end

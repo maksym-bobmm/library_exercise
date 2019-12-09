@@ -12,9 +12,10 @@
         %span.rating= draw_rating(@rating_score, @book)
 
         %span
-          %span{ 'data-toggle': 'tooltip', 'data-placement': 'right', title: 'Average rating' }= @book.rating.to_f
+          %span{ 'data-toggle': 'tooltip', 'data-placement': 'right', title: 'Average rating', class: 'average_rating' }
+            = @book.rating.to_f.round(1)
           %br
-          %span{ 'data-toggle': 'tooltip', 'data-placement': 'right', title: 'likes count' }= @likes_count
+          %span{ 'data-toggle': 'tooltip', 'data-placement': 'right', title: 'likes count', class: 'likes_count'}= @likes_count
         %a.fas.fa-question-circle.fa-2x{ tabindex: '0', 'data-toggle': 'popover', 'data-trigger': 'hover',
                                          'data-placement': 'left', 'data-html': 'true', 'data-container': 'body',
                                          'data-content': "Average rating <br/> likes count", trigger: 'hover'}

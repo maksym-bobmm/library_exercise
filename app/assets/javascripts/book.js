@@ -8,6 +8,7 @@ $(document).on('turbolinks:load', function() {
                 rating.append(event.detail[0].tags);
                 if(typeof event.detail[0].liked != 'undefined')
                     ++document.getElementsByClassName("likes_count")[0].textContent;
+                document.getElementsByClassName("average_rating")[0].textContent = event.detail[0].average_rating;
             }
         });
         body.on('ajax:success', '.button_to', function(event) {
