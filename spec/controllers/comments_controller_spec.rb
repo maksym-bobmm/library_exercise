@@ -69,52 +69,54 @@ RSpec.describe CommentsController, type: :controller do
         post :create, params: { book_id: @book.id, user_id: @user.id, body: 'test' }
         is_expected.to respond_with(200)
       end
-      it 'gets 302 on PATCH comment#update' do
+      it 'gets 200 on PATCH comment#update' do
         patch :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
-        is_expected.to respond_with(302)
+        is_expected.to respond_with(:success)
       end
-      it 'gets 302 on PUT comment#update' do
+      it 'gets 200 on PUT comment#update' do
         put :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
-        is_expected.to respond_with(302)
+        is_expected.to respond_with(:success)
       end
       it 'gets 200 on DELETE comment#destroy' do
       delete :destroy, params: { id: comment.id }
-        is_expected.to respond_with(200)
+        is_expected.to respond_with(:success)
       end
     end
     context 'not signed in user', :js => true do
       before(:each) { sign_in @user }
       it 'gets 200 on POST comment#create' do
         post :create, params: { book_id: @book.id, user_id: @user.id, body: 'test' }
-        is_expected.to respond_with(200)
+        is_expected.to respond_with(:success)
       end
-      it 'gets 302 on PATCH comment#update' do
+      it 'gets 200 on PATCH comment#update' do
         patch :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
-        is_expected.to respond_with(302)
+        is_expected.to respond_with(:success)
       end
-      it 'gets 302 on PUT comment#update' do
+      it 'gets 200 on PUT comment#update' do
         put :update, params: { id: @book.id, comment_id: comment.id, body: 'test' }
-        is_expected.to respond_with(302)
+        is_expected.to respond_with(:success)
       end
       it 'gets 200 on DELETE comment#destroy' do
         delete :destroy, params: { id: comment.id }
-        is_expected.to respond_with(200)
+        is_expected.to respond_with(:success)
       end
     end
   end
   describe 'params' do
-    before do
-      @params =  {
-          body: Faker::Lorem.word,
-          user_id: @user.id,
-          book_id: @book.id,
-          some_text: 'some var',
-          number: 42,
-          id: @book.id
+    let(:comment) { create(:comment, book_id: @book.id, user_id: @user.id) }
+    let(:params_for_comment)  { {
+        body: Faker::Lorem.word,
+        user_id: @user.id,
+        book_id: @book.id,
+        some_text: 'some var',
+        number: 42,
+        id: @book.id
       }
-    end
-    xit { is_expected.to permit(:body, :user_id).for(:create, params: @params) }
-    xit { is_expected.to permit(:body, :user_id, :book_id).for(:update, params: @params) }
+    }
+    let(:params_for_nested_comment) { params_for_comment.merge(parent_comment_id: comment.id) }
+    before(:each) { sign_in @user }
+    it { is_expected.to permit(:body, :user_id).for(:create, params: params_for_comment) }
+    it { is_expected.to permit(:body, :user_id, :book_id).for(:create, params: params_for_nested_comment ) }
   end
   #describe "GET #new" do
   #  it "returns http success" do

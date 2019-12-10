@@ -18,12 +18,8 @@ class CommentsController < ApplicationController
     return unless params['body']
     comment = Comment.find(params['comment_id'])
     comment.update(body: params['body'])
-    book = Book.find(params['id'])
-    if request.xhr?
-      render json: { body: comment.body, update_date: comment.updated_at.to_formatted_s(:short) }
-    else
-      redirect_to book_path(book)
-    end
+
+    render json: { body: comment.body, update_date: comment.updated_at.to_formatted_s(:short) }
   end
 
   def destroy
@@ -40,6 +36,7 @@ class CommentsController < ApplicationController
   end
 
   def nested_comments_params
-    comments_params.merge(book_id: params['book_id'])
+    params.permit(:body, :user_id, :book_id)
+    #comments_params.merge(book_id: params['book_id'])
   end
 end
