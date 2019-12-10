@@ -31,14 +31,14 @@ module BooksHelper
       button_name = 'Take'
       css_class << ' bg-success'
       disabled = !user_signed_in?
-      action = 'take'
+      action = take_book_index_path(book_id: book.id)
     else
       taked_user_id = book.histories.any? ? book.histories.last.user_id.to_s : current_user.id.to_s
       button_name = current_user.id.to_s == taked_user_id ? 'Return' : 'Already taken'
       disabled = current_user.id.to_s == taked_user_id ? false : true
       css_class << ' bg-warning'
-      action = 'return'
+      action = return_book_index_path(book_id: book.id)
     end
-    button_to button_name, { action: action, book_id: book.id }, class: css_class, disabled: disabled, remote: true
+    button_to button_name, action, class: css_class, disabled: disabled, remote: true
   end
 end
