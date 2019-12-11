@@ -55,7 +55,7 @@ end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'mongoid-rspec'
+  gem 'mongoid-rspec', git: 'https://github.com/mongoid/mongoid-rspec.git', branch: 'master'
   gem 'rails-controller-testing'
 end
 

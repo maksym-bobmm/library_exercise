@@ -1,4 +1,17 @@
 GIT
+  remote: https://github.com/mongoid/mongoid-rspec.git
+  revision: e8fcc17be493129f921b57d44f61c86628367998
+  branch: master
+  specs:
+    mongoid-rspec (4.0.2)
+      activesupport (>= 3.0.0)
+      mongoid (>= 3.1)
+      mongoid-compatibility (>= 0.5.1)
+      rspec-core (~> 3.3)
+      rspec-expectations (~> 3.3)
+      rspec-mocks (~> 3.3)
+
+GIT
   remote: https://github.com/rails/jbuilder.git
   revision: bec0d6c840c3486ee589d5de0ba9c348ccbc27ee
   branch: master
@@ -189,11 +202,6 @@ GEM
     mongoid-grid_fs (2.4.0)
       mime-types (>= 1.0, < 4.0)
       mongoid (>= 3.0, < 8.0)
-    mongoid-rspec (4.0.1)
-      activesupport (>= 3.0.0)
-      mongoid (>= 3.1)
-      mongoid-compatibility (>= 0.5.1)
-      rspec (~> 3.3)
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
@@ -241,10 +249,6 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
-    rspec (3.9.0)
-      rspec-core (~> 3.9.0)
-      rspec-expectations (~> 3.9.0)
-      rspec-mocks (~> 3.9.0)
     rspec-core (3.9.0)
       rspec-support (~> 3.9.0)
     rspec-expectations (3.9.0)
@@ -349,7 +353,7 @@ DEPENDENCIES
   kaminari-mongoid
   listen (>= 3.0.5, < 3.2)
   mongoid
-  mongoid-rspec
+  mongoid-rspec!
   puma (~> 3.7)
   rails (~> 6.0.0)
   rails-controller-testing

@@ -1,0 +1,7 @@
+- histories.each do |history|
+  .card.border-dark.mb-3
+    .card-body.text-dark.text-center.history-item
+      %p= 'User:  ' + history.user.email
+      %p= 'Take date:  ' + history.take_date.to_formatted_s(:short)
+      - unless history.return_date.nil?
+        %p= 'Return date  ' + history.return_date.to_formatted_s(:short)

@@ -28,8 +28,8 @@
       %br
       %p=@book.description
 
-  .col-md-12.text-center
-    = link_to 'back', book_index_path
+  .col-md-12.text-center.my-4
+    = link_to 'back', book_index_path, class: 'btn-info btn-lg'
   .comment-create.text-center
     = link_to 'Create comment', '#', 'data-toggle': 'modal', 'data-target': '#new-comment',
                class: 'comment-reply-link btn btn-primary'
@@ -40,6 +40,9 @@
         = render 'comments/comment', comment: comment
     = render 'comments/edit'
   - if @book.histories.size.positive?
-    .history.mt-5
+    .history.mt-5.d-none.d-md-block
       %h5.text-center History
-      = render 'history', histories: @book.histories
+      = render 'history', histories: @book.histories.reverse
+    .history.mt-5.d-block.d-md-none
+      %h5.text-center History
+      = render 'history-cards', histories: @book.histories.reverse

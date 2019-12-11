@@ -38,7 +38,7 @@ class BookController < ApplicationController
   end
 
   def show
-    @book = Book.find(params['id'])
+    @book = Book.includes(:histories).find(params['id'])
     liked = @book.users_likes.where(user_id: current_user&.id).exists?
     @rating_score = liked ? @book.users_likes.find_by(user_id: current_user&.id).score : 0
     @likes_count = @book.users_likes.size

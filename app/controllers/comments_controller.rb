@@ -2,15 +2,17 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
 
   def create
-    return if params['body']&.empty?
+    render json: { created: false } and return if params['body']&.empty?
+
     book = Book.find(params['book_id'])
     if params['parent_comment_id']
       comment = book.comments.find(params['parent_comment_id']).comments.new(nested_comments_params)
     else
       comment = book.comments.new(comments_params)
     end
-    comment.save
-    new_comment = helpers.render('comments/comment', comment: comment)
+    render json: { created: false } and return unless comment.save
+
+    new_comment = helpers.render('comments/comment', comment: comment, created: true)
     render json: new_comment
   end
 
