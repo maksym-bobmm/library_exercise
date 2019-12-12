@@ -3,8 +3,8 @@
     .col
       %h1.text-center Library
       - if user_signed_in?
-        .text-center
-          = link_to 'create book', new_book_path
+        .text-center.my-5
+          = link_to 'create book', new_book_path, class: 'btn-lg btn-primary'
       .top-books.books-list
         %h5.text-center Top rated books
         = render 'table', books: @top_books, top_table: true
@@ -14,4 +14,4 @@
           = render 'table', books: @books, top_table: false
           .pagination.d-flex.justify-content-center
             = paginate @books
-          = submit_tag 'delete selected', id: 'delete_multiple'
+          = submit_tag 'delete selected', id: 'delete_multiple', class: 'btn-lg btn-danger'

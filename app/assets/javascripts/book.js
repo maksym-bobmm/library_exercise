@@ -66,11 +66,28 @@ $(document).on('turbolinks:load', function() {
             let text = document.getElementById('comment_edit-text_field');
             text.value = '';
         });
+        $('.checkbox').change(function(){
+            if (any_checked())
+                $('#delete_multiple').show();
+            else
+                $('#delete_multiple').hide();
+        });
+        body.on('checked', '.checkbox', function(event) {
+            alert('aaaaa')
+        });
         $(document).ready(function(){
             $('[data-toggle="popover"]').popover();
         });
     });
 });
+function any_checked(){
+    let checkboxes = document.getElementsByClassName('checkbox')
+    for(let checkbox of checkboxes){
+        if (checkbox.checked)
+            return true
+    }
+    return false
+}
 function reply_click(event) {
     let form = document.getElementById('create-comment');
     let parent_comment_id = event.currentTarget.dataset.comment_id;

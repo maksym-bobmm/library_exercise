@@ -1,6 +1,8 @@
 %script{src: "https://kit.fontawesome.com/0b512414c4.js", crossorigin: "anonymous"}
 .container-fluid
   .row
+    .col-md-12.text-center.mt-2
+      = link_to 'back', book_index_path, class: 'btn-info btn-lg'
     .col-12
       %h6.text-center.book_show-title=@book.name
   .row
@@ -28,8 +30,6 @@
       %br
       %p=@book.description
 
-  .col-md-12.text-center.my-4
-    = link_to 'back', book_index_path, class: 'btn-info btn-lg'
   .comment-create.text-center
     = link_to 'Create comment', '#', 'data-toggle': 'modal', 'data-target': '#new-comment',
                class: 'comment-reply-link btn btn-primary'

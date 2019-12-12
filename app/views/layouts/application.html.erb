@@ -10,12 +10,12 @@
   </head>
 
   <body>
-    <menu class="text-center">
+    <menu class="text-center pl-0">
       <% if user_signed_in? %>
-        <%= link_to 'sign_out', destroy_user_session_path, method: :delete %>
+        <%= link_to 'sign_out', destroy_user_session_path, method: :delete, class: 'btn-lg btn-info' %>
       <% else %>
-        <%= link_to 'sign_in', new_user_session_path %>
-        <%= link_to 'sign_up', new_user_registration_path %>
+        <%= link_to 'sign_in', new_user_session_path, class: 'btn-lg btn-info' %>
+        <%= link_to 'sign_up', new_user_registration_path, class: 'btn-lg btn-info' %>
       <% end %>
     </menu>
     <%= yield %>
