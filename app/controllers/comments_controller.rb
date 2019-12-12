@@ -5,6 +5,8 @@ class CommentsController < ApplicationController
     render json: { created: false } and return if params['body']&.empty?
 
     book = Book.find(params['book_id'])
+    return unless book
+
     if params['parent_comment_id']
       comment = book.comments.find(params['parent_comment_id']).comments.new(nested_comments_params)
     else
@@ -12,8 +14,8 @@ class CommentsController < ApplicationController
     end
     render json: { created: false } and return unless comment.save
 
-    new_comment = helpers.render('comments/comment', comment: comment, created: true)
-    render json: new_comment
+    new_comment = helpers.render('comments/comment', comment: comment)
+    render json: { new_comment: new_comment, created: true }
   end
 
   def update
@@ -28,6 +30,8 @@ class CommentsController < ApplicationController
     return unless params['id']
 
     comment = Comment.find(params['id'])
+    return unless comment
+
     comment.destroy
   end
 

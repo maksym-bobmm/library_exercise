@@ -11,7 +11,11 @@
         %td.align-middle.text-center=link_to book.name, book_path(book)
         %td.d-none.d-md-table-cell= book.description
         %td.align-middle.text-center=book.author
-        %td.align-middle.text-center=receive_book_state(book)
+        - if receive_book_state(book) == 'Out'
+          %td.align-middle.text-center.text-primary{'data-toggle': 'tooltip', 'data-placement': 'top',
+            title: "Book is taken by #{receive_book_taker(book)}"}=receive_book_state(book)
+        -else
+          %td.align-middle.text-center=receive_book_state(book)
         - unless top_table
           %td.align-middle.text-center
             = check_box_tag('books_ids[]', book.id, false, class: 'checkbox')

@@ -38,7 +38,7 @@ $(document).on('turbolinks:load', function() {
             $('#edit-comment').modal('hide')
         });
         body.on('ajax:success', '#create-comment', function(event) {
-            let new_comment = event.detail[0];
+            let new_comment = event.detail[0].new_comment;
             if(event.detail[0].created == true) {
                 let parent_id_input = this.querySelector("input[name='parent_comment_id']");
                 let parent_element = parent_id_input !== null ?
@@ -49,11 +49,11 @@ $(document).on('turbolinks:load', function() {
                 let last_Child = parent_element.lastChild;
                 if (parent_id_input !== null)
                     this.removeChild(parent_id_input);
-                last_Child.style.backgroundColor = "#44aa44";
-                setTimeout(function () {
-                    last_Child.style.backgroundColor = "";
-                }, 200);
-                last_Child.scrollIntoView();
+                // last_Child.style.backgroundColor = "#44aa44";
+                // setTimeout(function () {
+                //     last_Child.style.backgroundColor = "";
+                // }, 200);
+                // last_Child.scrollIntoView();
                 $('#new-comment').modal('hide');
                 // last_Child.focus();
             }

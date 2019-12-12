@@ -41,4 +41,10 @@ module BooksHelper
     end
     button_to button_name, action, class: css_class, disabled: disabled, remote: true
   end
+
+  def receive_book_taker(book)
+    user_id = book.histories.last.user_id
+    user = User.find(user_id)
+    "#{user.email}"
+  end
 end

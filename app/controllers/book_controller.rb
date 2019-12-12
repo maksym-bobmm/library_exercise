@@ -19,7 +19,10 @@ class BookController < ApplicationController
   def destroy
     return unless user_signed_in?
 
-    Book.find(params['id']).delete
+    book = Book.find(params['id'])
+    return unless book
+
+    book.delete
     if request.xhr?
       render json: { book_id: params['id'] }
     else
@@ -32,13 +35,18 @@ class BookController < ApplicationController
 
     ids = params['books_ids']
     ids.each do |id|
-      Book.find(id).destroy
+      book = Book.find(id)
+      continue unless book
+
+      book.delete
     end
     redirect_to book_index_path
   end
 
   def show
     @book = Book.includes(:histories).find(params['id'])
+    redirect_to book_index_path and return unless @book
+
     liked = @book.users_likes.where(user_id: current_user&.id).exists?
     @rating_score = liked ? @book.users_likes.find_by(user_id: current_user&.id).score : 0
     @likes_count = @book.users_likes.size
@@ -49,6 +57,7 @@ class BookController < ApplicationController
     return unless user_signed_in?
 
     book = Book.find(params['book_id'])
+    return unless book
     return if book.state == false
 
     book.update_attributes(state: false)
@@ -64,6 +73,7 @@ class BookController < ApplicationController
     return unless user_signed_in?
 
     book = Book.find(params['book_id'])
+    return unless book
     return if book.state == true
 
     book.update_attributes(state: true)
