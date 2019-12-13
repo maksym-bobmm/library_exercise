@@ -30,22 +30,58 @@ RSpec.describe BooksController, type: :controller do
       it 'is expected to render template index' do
         expect(response).to render_template(:index)
       end
+      it 'is expected to get 200 status' do
+        expect(response).to have_http_status(:success)
+      end
     end
     context '#create' do
+      let(:correct_create_query) { post :create, params: { name: 'test', description: 'test', author: 'test'} }
+      let(:wrong_create_query) { post :create, params: { name: 'test'} }
       it 'changes count after create by signed in user' do
         expect {
-          post :create, params: { name: 'test', description: 'test', author: 'test'}
+          correct_create_query
         }.to change(Book, :count).by(1)
       end
       it 'does not change count after create by not signed in user' do
         expect {
-          post :create, params: { name: 'test', description: 'test', author: 'test'}
+          correct_create_query
         }.to change(Book, :count)
       end
+      it 'does not change count if book was not created' do
+        expect {
+          wrong_create_query
+        }.to_not change(Book, :count)
+      end
+      context 'gets status' do
+        it 'redirect with correct query' do
+          correct_create_query
+          expect(response).to have_http_status(:redirect)
+        end
+        it 'redirect with wrong query' do
+          wrong_create_query
+          expect(response).to have_http_status(:redirect)
+        end
+        it 'success with not signed in user', :not_signed_in_user do
+          correct_create_query
+          expect(response).to have_http_status(:success)
+        end
+      end
+      context 'redirects to' do
+        it '#index with correct query' do
+          correct_create_query
+          expect(response).to redirect_to(assigns(:index))
+        end
+        it '#new with wrong query' do
+          wrong_create_query
+          expect(response).to redirect_to(assigns(:new))
+        end
+      end
+
     end
     context '#new' do
       subject { get :new }
       it { is_expected.to render_template(:new) }
+      it { is_expected.to have_http_status(:success) }
     end
     context '#edit' do
       it do
@@ -65,21 +101,33 @@ RSpec.describe BooksController, type: :controller do
       it do
         expect(request).to render_template(:show)
       end
-      it 'variables @book, @rating_score and @likes_count are expected not to be nil' do
-        expect(@controller.instance_variable_get(:@book)).not_to be_nil
-        expect(@controller.instance_variable_get(:@rating_score)).not_to be_nil
-        expect(@controller.instance_variable_get(:@likes_count)).not_to be_nil
+      context 'variable' do
+        it '@book, @rating_score and @likes_count are expected not to be nil' do
+          expect(@controller.instance_variable_get(:@book)).not_to be_nil
+          expect(@controller.instance_variable_get(:@rating_score)).not_to be_nil
+          expect(@controller.instance_variable_get(:@likes_count)).not_to be_nil
+        end
+        it '@rating_score and @likes_count are expected to be an Integer' do
+          expect(@controller.instance_variable_get(:@rating_score)).to be_instance_of(Integer)
+          expect(@controller.instance_variable_get(:@likes_count)).to be_instance_of(Integer)
+        end
+        it '@book is expected to be an instance of Book' do
+          expect(@controller.instance_variable_get(:@book)).to be_instance_of(Book)
+        end
+        it '@parent_comments is expected to be an instance of Mongoid::Criteria' do
+          expect(@controller.instance_variable_get(:@parent_comments)).to be_instance_of(Mongoid::Criteria)
+        end
       end
-      it 'variables @rating_score and @likes_count are expected to be an instance of Book' do
-        expect(@controller.instance_variable_get(:@rating_score)).to be_instance_of(Integer)
-        expect(@controller.instance_variable_get(:@likes_count)).to be_instance_of(Integer)
+      context 'gets status' do
+        it 'is expected to respond with a success status code (2xx)' do
+          expect(response).to have_http_status(:success)
+        end
+        xit do
+          get :show, params: { id: '000000000000000000000000' }
+          expect(response).to have_http_status(:redirect)
+        end
       end
-      it 'variable @book is expected to be an instance of Book' do
-        expect(@controller.instance_variable_get(:@book)).to be_instance_of(Book)
-      end
-      it 'variable @parent_comments is expected to be an instance of Mongoid::Criteria' do
-        expect(@controller.instance_variable_get(:@parent_comments)).to be_instance_of(Mongoid::Criteria)
-      end
+
     end
     context '#destroy' do
       let!(:book_for_delete) { create(:book) }

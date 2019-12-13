@@ -1,15 +1,5 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the BooksHelper. For example:
-#
-# describe BooksHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe BooksHelper, type: :helper do
   let(:book) { create(:book) }
   let(:user) { create(:user) }
@@ -49,11 +39,22 @@ RSpec.describe BooksHelper, type: :helper do
   describe '#draw_take_button' do
     before(:each) { sign_in user }
     it "is expected to return an instance of ActiveSupport::SafeBuffer" do
-      #allow(helper).to receive(:current_user).and_return(user)
       expect(helper.draw_take_button(book)).to be_instance_of(ActiveSupport::SafeBuffer)
     end
     it "is expected not to return nil" do
       expect(helper.draw_take_button(book)).to_not be nil
+    end
+  end
+  describe '#receive_book_taker' do
+    before(:each) do
+      sign_in user
+      create(:history_take_only, user_id: user.id, book_id: book.id)
+    end
+    it 'is expected to return user\'s email' do
+      expect(receive_book_taker(book)).to eq user.email.to_s
+    end
+    it "is expected to return a String" do
+      expect(receive_book_taker(book)).to be_instance_of(String)
     end
   end
 end
