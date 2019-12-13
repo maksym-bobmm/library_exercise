@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe BookController, type: :controller do
+RSpec.describe BooksController, type: :controller do
   describe 'route' do
-    it { is_expected.to route(:get,   '/book').to(action: :index) }
-    it { is_expected.to route(:post,  '/book').to(action: :create) }
-    it { is_expected.to route(:get,   '/book/new').to(action: :new) }
-    it { is_expected.to route(:get,   '/book/1/edit').to(action: :edit, id: 1) }
-    it { is_expected.to route(:get,   '/book/1').to(action: :show, id: 1) }
-    it { is_expected.to route(:patch, '/book/1').to(action: :update, id: 1) }
-    it { is_expected.to route(:put,   '/book/1').to(action: :update, id: 1) }
-    it { is_expected.to route(:delete,'/book/1').to(action: :destroy, id: 1) }
-    it { is_expected.to route(:post,  '/book/destroy_multiple').to(action: :destroy_multiple) }
-    it { is_expected.to route(:post,  '/book/take').to(action: :take) }
-    it { is_expected.to route(:post,  '/book/return').to(action: :return) }
+    it { is_expected.to route(:get,   '/books').to(action: :index) }
+    it { is_expected.to route(:post,  '/books').to(action: :create) }
+    it { is_expected.to route(:get,   '/books/new').to(action: :new) }
+    it { is_expected.to route(:get,   '/books/1/edit').to(action: :edit, id: 1) }
+    it { is_expected.to route(:get,   '/books/1').to(action: :show, id: 1) }
+    it { is_expected.to route(:patch, '/books/1').to(action: :update, id: 1) }
+    it { is_expected.to route(:put,   '/books/1').to(action: :update, id: 1) }
+    it { is_expected.to route(:delete,'/books/1').to(action: :destroy, id: 1) }
+    it { is_expected.to route(:post,  '/books/destroy_multiple').to(action: :destroy_multiple) }
+    it { is_expected.to route(:post,  '/books/take').to(action: :take) }
+    it { is_expected.to route(:post,  '/books/return').to(action: :return) }
   end
   describe 'action' do
     before(:all) { @user = create(:user) }

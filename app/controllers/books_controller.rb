@@ -1,4 +1,4 @@
-class BookController < ApplicationController
+class BooksController < ApplicationController
   def index
     @books = Book.order_by(name: :asc).page params[:page]
     @top_books = Book.all.to_a.sort_by { |book| book.rating }.last(5).reverse
@@ -10,7 +10,7 @@ class BookController < ApplicationController
     return unless user_signed_in?
 
     if Book.create(book_params)
-      redirect_to book_index_path
+      redirect_to books_path
     else
       redirect_to new_book_path
     end
@@ -26,7 +26,7 @@ class BookController < ApplicationController
     if request.xhr?
       render json: { book_id: params['id'] }
     else
-      redirect_to book_index_path
+      redirect_to books_path
     end
   end
 
@@ -40,12 +40,12 @@ class BookController < ApplicationController
 
       book.delete
     end
-    redirect_to book_index_path
+    redirect_to books_path
   end
 
   def show
     @book = Book.includes(:histories).find(params['id'])
-    redirect_to book_index_path and return unless @book
+    redirect_to books_path and return unless @book
 
     liked = @book.users_likes.where(user_id: current_user&.id).exists?
     @rating_score = liked ? @book.users_likes.find_by(user_id: current_user&.id).score : 0

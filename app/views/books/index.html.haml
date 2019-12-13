@@ -10,7 +10,7 @@
         = render 'table', books: @top_books, top_table: true
       .all-books.books-list
         %h5.text-center All books
-        =form_with url: destroy_multiple_book_index_path, method: :post do
+        =form_with url: destroy_multiple_books_path, method: :post do
           = render 'table', books: @books, top_table: false
           .pagination.d-flex.justify-content-center
             = paginate @books

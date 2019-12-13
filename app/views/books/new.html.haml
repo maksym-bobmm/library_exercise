@@ -3,11 +3,11 @@
     .col.col-md-6.w-md-50.offset-md-3
       %h3.text-center Create book
       .text-center
-        = form_with url: book_index_path, method: :post, local: true, multipart: true do
+        = form_with url: books_path, method: :post, local: true, multipart: true do
 
           = text_field_tag(:name, nil, placeholder: 'Book name', class: 'book_create-text')
           %br= text_area_tag(:description, nil, placeholder: 'Description', class: 'book_create-text')
           = text_field_tag(:author, nil, placeholder: 'Author', class: 'book_create-text')
           %br= file_field_tag('avatar')
           %br= submit_tag('create', class: 'btn-lg btn-primary mb-5')
-        = link_to 'back', book_index_path, class: 'btn-lg btn-info'
+        = link_to 'back', books_path, class: 'btn-lg btn-info'

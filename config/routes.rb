@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :book do
+  resources :books do
     collection do
       post 'destroy_multiple'
       post 'take'
@@ -11,5 +11,5 @@ Rails.application.routes.draw do
   resources :rating, only: [:create]
   resources :comments, except: %i[index new edit show]
   #get '/rating', to: 'rating#create'
-  root 'book#index'
+  root 'books#index'
 end
