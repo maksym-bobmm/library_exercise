@@ -1,7 +1,7 @@
 class BookController < ApplicationController
   def index
     @books = Book.order_by(name: :asc).page params[:page]
-    @top_books = Book.order_by(rating: :desc).limit(5).to_a
+    @top_books = Book.all.to_a.sort_by { |book| book.rating }.last(5).reverse
   end
 
   def new; end
