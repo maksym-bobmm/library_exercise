@@ -6,7 +6,8 @@ $(document).on('turbolinks:load', function() {
                 let rating = $('.rating');
                 rating.children().remove();
                 rating.append(event.detail[0].tags);
-                if(typeof event.detail[0].liked != 'undefined')
+                debugger;
+                if(JSON.parse(event.detail[0].already_liked) === false)
                     ++document.getElementsByClassName("likes_count")[0].textContent;
                 document.getElementsByClassName("average_rating")[0].textContent = event.detail[0].average_rating;
             }

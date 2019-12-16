@@ -9,7 +9,8 @@ class BooksController < ApplicationController
   def create
     return unless user_signed_in?
 
-    if Book.create(book_params)
+    book = Book.create(book_params)
+    if book.save
       redirect_to books_path
     else
       redirect_to new_book_path
@@ -23,11 +24,8 @@ class BooksController < ApplicationController
     return unless book
 
     book.delete
-    if request.xhr?
-      render json: { book_id: params['id'] }
-    else
-      redirect_to books_path
-    end
+
+    render json: { book_id: params['id'] }
   end
 
   def destroy_multiple
@@ -62,11 +60,8 @@ class BooksController < ApplicationController
 
     book.update_attributes(state: false)
     book.histories.create(user_id: current_user.id, take_date: Time.now )
-    if request.xhr?
-      render json: { button: helpers.draw_take_button(book) }
-    else
-      redirect_to book_path(book)
-    end
+
+    render json: { button: helpers.draw_take_button(book) }
   end
 
   def return
@@ -78,11 +73,8 @@ class BooksController < ApplicationController
 
     book.update_attributes(state: true)
     book.histories.all.last.update_attributes(return_date: Time.now) if book.histories.any?
-    if request.xhr?
-      render json: { button: helpers.draw_take_button(book) }
-    else
-      redirect_to book_path(book)
-    end
+
+    render json: { button: helpers.draw_take_button(book) }
   end
 
   private

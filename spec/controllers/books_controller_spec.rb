@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe BooksController, type: :controller do
+  before(:all) { @user = create(:user) }
   describe 'route' do
     it { is_expected.to route(:get,   '/books').to(action: :index) }
     it { is_expected.to route(:post,  '/books').to(action: :create) }
@@ -15,7 +16,6 @@ RSpec.describe BooksController, type: :controller do
     it { is_expected.to route(:post,  '/books/return').to(action: :return) }
   end
   describe 'action' do
-    before(:all) { @user = create(:user) }
     before(:each) { |test| sign_in(@user) unless test.metadata[:not_signed_in_user] }
     let(:book) { create(:book) }
 
@@ -40,17 +40,17 @@ RSpec.describe BooksController, type: :controller do
       it 'changes count after create by signed in user' do
         expect {
           correct_create_query
-        }.to change(Book, :count).by(1)
+        }.to change{ Book.count }.by(1)
       end
       it 'does not change count after create by not signed in user' do
         expect {
           correct_create_query
-        }.to change(Book, :count)
+        }.to change{ Book.count }
       end
       it 'does not change count if book was not created' do
         expect {
           wrong_create_query
-        }.to_not change(Book, :count)
+        }.to_not change{ Book.count }
       end
       context 'gets status' do
         it 'redirect with correct query' do
@@ -69,11 +69,11 @@ RSpec.describe BooksController, type: :controller do
       context 'redirects to' do
         it '#index with correct query' do
           correct_create_query
-          expect(response).to redirect_to(assigns(:index))
+          expect(response).to redirect_to books_path
         end
         it '#new with wrong query' do
           wrong_create_query
-          expect(response).to redirect_to(assigns(:new))
+          expect(response).to redirect_to new_book_path
         end
       end
 
@@ -119,104 +119,176 @@ RSpec.describe BooksController, type: :controller do
         end
       end
       context 'gets status' do
-        it 'is expected to respond with a success status code (2xx)' do
+        it 'success (2xx) with a correct query', :not_signed_in_user do
+          expect(response).to have_http_status(:success)
+          sign_in @user
+          get :show, params: { id: book.id }
           expect(response).to have_http_status(:success)
         end
-        xit do
+        it 'redirect (3xx) and redirects to books_path with wrong book id', :not_signed_in_user do
           get :show, params: { id: '000000000000000000000000' }
-          expect(response).to have_http_status(:redirect)
+          expect(subject).to redirect_to books_path
+          sign_in @user
+          get :show, params: { id: '000000000000000000000000' }
+          expect(subject).to redirect_to books_path
         end
       end
-
     end
     context '#destroy' do
       let!(:book_for_delete) { create(:book) }
-      it 'changes count after delete by signed in user' do
-        expect {
-          delete :destroy, params: { id: book_for_delete.id }
-        }.to change(Book, :count).by(-1)
+      let(:delete_query) { delete :destroy, xhr: true, params: { id: book_for_delete.id } }
+      context 'with correct query' do
+        it 'changes count after delete by signed in user' do
+          expect { delete_query }.to change{ Book.count }.by(-1)
+        end
+        it 'does no changes count after delete by not signed in user', :not_signed_in_user do
+          expect { delete_query }.not_to change{ Book.count }
+        end
       end
-      it 'does no changes count after delete by not signed in user', :not_signed_in_user do
-        expect {
-          delete :destroy, params: { id: book_for_delete.id }
-        }.not_to change(Book, :count)
+      context 'with wrong book id' do
+        it 'changes count after delete by signed in user' do
+          expect {
+            delete :destroy, xhr: true, params: { id: '000000' }
+          }.to_not change{ Book.count }
+        end
       end
+      context 'response' do
+        it 'contain json' do
+          delete_query
+          expect(response.content_type).to include('application/json')
+        end
+        it 'contain not empty body' do
+          delete_query
+          expect(response.body).not_to be nil
+        end
+      end
+
+
     end
     context '#take' do
-      it 'is expected to change `Book#state` by signed in user' do
+      let(:create_query) { post :take, params: { book_id: book.id } }
+      it 'changes `Book#state` by signed in user' do
         expect{
-          post :take, params: { book_id: book.id }
+          create_query
           book.reload
         }.to change(book, :state)
       end
-      it 'is expected to change `History.count` by 1 with signed in user' do
+      it 'changes `History.count` by 1 with signed in user' do
         expect{
-          post :take, params: { book_id: book.id }
-        }.to change(History, :count).by(1)
+          create_query
+        }.to change{ History.count}.by(1)
       end
-      it 'is expected not to change `Book#state` by not signed in user', :not_signed_in_user do
+      it 'does not change `Book#state` by not signed in user', :not_signed_in_user do
         expect{
-          post :take, params: { book_id: book.id }
+          create_query
           book.reload
         }.to_not change(book, :state)
       end
-      it 'is expected not to change `History.count` with not signed in user', :not_signed_in_user do
+      it 'does not change `History.count` by not signed in user', :not_signed_in_user do
         expect{
-          post :take, params: { book_id: book.id }
-        }.to_not change(History, :count)
+          create_query
+        }.to_not change{ History.count }
       end
-      it 'is expected not to change `Book#state` if book`s state is already false', :not_signed_in_user do
+      it 'does not change `Book#state` if book`s state is already false', :not_signed_in_user do
         expect{
           book.state = false
-          post :take, params: { book_id: book.id }
+          create_query
           book.reload
         }.to_not change(book, :state)
       end
-      it 'is expected not to change `History.count` if book`s state is already false', :not_signed_in_user do
+      it 'does not change `History.count` if book`s state is already false', :not_signed_in_user do
         expect{
           book.state = false
-          post :take, params: { book_id: book.id }
-        }.to_not change(History, :count)
+          create_query
+        }.to_not change{ History.count }
+      end
+      context 'response' do
+        it 'contain json' do
+          create_query
+          expect(response.content_type).to include('application/json')
+        end
+        it 'contain not empty body' do
+          create_query
+          expect(response).not_to be nil
+        end
+      end
+      context 'with wrong book id' do
+        it 'does not change book.state' do
+          expect{
+            post :take, params: { book_id: '000' }
+          }.to_not change(book, :state)
+        end
+        it 'does not change History count' do
+          expect{
+            post :take, params: { book_id: '000' }
+          }.to_not change{ History.count }
+        end
       end
     end
     context '#return' do
+      let(:return_query) { post :return, xhr: true, params: { book_id: book.id } }
       let(:history) { create(:history_take_only, user_id: @user.id, book_id: book.id) }
-      before(:each) { book.update_attributes(state: false) }
+      before(:each) {
+        book.update_attributes(state: false)
+        create(:history_take_only, user_id: @user.id, book_id: book.id)
+      }
       it 'is expected to change `Book#state` by signed in user' do
         expect{
-          post :return, params: { book_id: book.id }
+          return_query
           book.reload
         }.to change(book, :state)
       end
-      it 'is expected to change return_date in last history record by signed in user' do
+      it 'is expected to change `return_date` in last history record by signed in user' do
         history
         expect{
-          post :return, params: { book_id: book.id }
+          return_query
         }.to change { book.histories.last.return_date }
       end
       it 'is expected not to change `Book#state` by not signed in user', :not_signed_in_user do
         expect{
-          post :return, params: { book_id: book.id }
+          return_query
           book.reload
         }.to_not change(book, :state)
       end
-      it 'is expected not to change `History.count` with not signed in user', :not_signed_in_user do
+      it 'is expected not to change `return_date` in last history record by not signed in user', :not_signed_in_user do
         expect{
-          post :return, params: { book_id: book.id }
-        }.to_not change(History, :count)
+          return_query
+        }.to_not change{ book.histories.last.return_date }
       end
       it 'is expected not to change `Book#state` if book`s state is already true', :not_signed_in_user do
         expect{
-          book.state = false
-          post :return, params: { book_id: book.id }
+          book.state = true
+          return_query
           book.reload
         }.to_not change(book, :state)
       end
-      it 'is expected not to change `History.count` if book`s state is already true', :not_signed_in_user do
+      it 'is expected not to change `return_date` in last history record by if book`s state is already true', :not_signed_in_user do
         expect{
-          book.state = false
-          post :return, params: { book_id: book.id }
-        }.to_not change(History, :count)
+          book.state = true
+          return_query
+        }.to_not change{ book.histories.last.return_date }
+      end
+      context 'response' do
+        it 'contain json' do
+          return_query
+          expect(response.content_type).to include('application/json')
+        end
+        it 'contain not empty body' do
+          return_query
+          expect(response.body).to_not be nil
+        end
+      end
+      context 'with wrong book id' do
+        it 'does not change book.state' do
+          expect{
+            post :return, xhr: true, params: { book_id: '000' }
+          }.to_not change(book, :state)
+        end
+        it 'does not change `return_date` in last history record' do
+          expect{
+            post :return, xhr: true, params: { book_id: '000' }
+          }.to_not change{ History.last.return_date }
+        end
       end
     end
     context '#destroy_multiple' do
@@ -230,18 +302,28 @@ RSpec.describe BooksController, type: :controller do
       it 'is expected to change `Book.count` by -2 by signed in user' do
         expect{
           post :destroy_multiple, params: { books_ids: @ids }
-        }.to change(Book, :count).by(-2)
+        }.to change{ Book.count }.by(-2)
       end
       it 'is expected not to change `Book.count` by signed in user', :not_signed_in_user do
         expect{
           post :destroy_multiple, params: { books_ids: @ids }
-        }.to_not change(Book, :count)
+        }.to_not change{ Book.count }
       end
       it 'is expected not to change `Book.count` without books_ids in params', :no_ids do
         expect{
           post :destroy_multiple
-        }.to_not change(Book, :count)
+        }.to_not change{ Book.count }
       end
     end
+  end
+  describe 'strong params' do
+    before(:each) { sign_in @user }
+    let(:params) { {
+      name: Faker::Book.title,
+      description: Faker::Lorem.paragraph(sentence_count: 5, supplemental: true, random_sentences_to_add: 20),
+      author: Faker::Book.author,
+      sometext: 'text'
+    } }
+    it { is_expected.to permit(:name, :description, :author, :avatar).for(:create, params: params) }
   end
 end

@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!
 
   def create
     render json: { created: false } and return if params['body']&.empty?
@@ -43,6 +43,5 @@ class CommentsController < ApplicationController
 
   def nested_comments_params
     params.permit(:body, :user_id, :book_id)
-    #comments_params.merge(book_id: params['book_id'])
   end
 end
