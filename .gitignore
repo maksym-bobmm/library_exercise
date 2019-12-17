@@ -28,3 +28,9 @@ db_design.mwb.bak
 /config/application.yml
 # ignore saved image
 /public/uploads/*
+
+/config/credentials/development.key
+
+/config/credentials/production.key
+
+/config/credentials/test.key

@@ -5,7 +5,7 @@ development:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      database: <%= ENV.fetch('db_name') %>
+      database: <%= Rails.application.credentials.db_name %>
       # Provides the hosts the default client can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
@@ -155,7 +155,7 @@ development:
 test:
   clients:
     default:
-      database: <%= ENV.fetch('db_name') %>
+      database: <%= Rails.application.credentials.db_name %>
       hosts:
         - localhost:27017
       options:
@@ -168,7 +168,10 @@ test:
 production:
   clients:
     default:
-      uri: <%= ENV.fetch('MONGODB_URI') %>
+      uri: <%= Rails.application.credentials.mongodb_uri %>
+#      database: <%#= Rails.application.credentials.db_name %>
+#      hosts:
+#        - localhost:27017
       options:
         read:
           mode: :primary
