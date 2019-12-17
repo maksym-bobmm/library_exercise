@@ -169,9 +169,6 @@ production:
   clients:
     default:
       uri: <%= Rails.application.credentials.MONGODB_URI %>
-#      database: <%#= Rails.application.credentials.db_name %>
-#      hosts:
-#        - localhost:27017
       options:
         read:
           mode: :primary
