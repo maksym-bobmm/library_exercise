@@ -8,5 +8,8 @@ FactoryBot.define do
     factory :book_with_like do
       users_likes { [create(:users_likes, user)] }
     end
+    factory :book_with_image do
+      remote_avatar_url { Faker::Avatar.image( size: "450x450" ) }
+    end
   end
 end

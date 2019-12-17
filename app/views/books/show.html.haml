@@ -7,7 +7,7 @@
       %h6.text-center.book_show-title=@book.name
   .row
     .col-12.col-md-6.text-center.text-md-right.order-2.order-md-1.my-2
-      = image_tag(@book.avatar.thumb.to_s, alt: 'avatar')
+      = image_tag(@book.avatar.to_s, alt: 'avatar')
 
     .col-12.col-md-6.text-left.order-1.order-md-1.text-center.text-md-left
       .col-12.d-flex.align-items-center.justify-content-center.justify-content-md-start
