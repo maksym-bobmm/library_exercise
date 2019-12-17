@@ -28,7 +28,7 @@ RSpec.describe RatingController, type: :controller do
         end
       end
       context 'response' do
-        it 'is expected not to get ajax with not signed in user', :not_signed_in do
+        it 'is expected not to get json with not signed in user', :not_signed_in do
           create_with_xhr
           expect(response.content_type).to be nil
         end
@@ -43,9 +43,9 @@ RSpec.describe RatingController, type: :controller do
           expect(response.content_type).to include('application/json')
           expect(response.body).to include('"already_liked":false')
         end
-        xit 'contain `"liked":true` in json with user that liked book' do
-          create_with_xhr
-          create_with_xhr
+        it 'contain `"liked":true` in json with user that liked book' do
+          new_book = create(:book_with_like, users_likes: [create(:users_like, user_id: user.id)])
+          post :create, xhr: true, params: { book_id: new_book.id, score: (1..5).to_a.sample }
           expect(response.content_type).to include('application/json')
           expect(response.body).to include('"already_liked":true')
         end

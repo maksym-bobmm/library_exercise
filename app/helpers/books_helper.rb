@@ -43,6 +43,8 @@ module BooksHelper
   end
 
   def receive_book_taker(book)
+    return unless book.histories.any?
+
     user_id = book.histories.last.user_id
     user = User.find(user_id)
     "#{user.email}"

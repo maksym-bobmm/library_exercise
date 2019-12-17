@@ -46,15 +46,18 @@ RSpec.describe BooksHelper, type: :helper do
     end
   end
   describe '#receive_book_taker' do
-    before(:each) do
+    before(:each) do |example|
       sign_in user
-      create(:history_take_only, user_id: user.id, book_id: book.id)
+      create(:history_take_only, user_id: user.id, book_id: book.id) unless example.metadata[:no_history]
     end
     it 'is expected to return user\'s email' do
       expect(receive_book_taker(book)).to eq user.email.to_s
     end
     it "is expected to return a String" do
       expect(receive_book_taker(book)).to be_instance_of(String)
+    end
+    it 'is expected to return nothing when book does not have history', :no_history do
+      expect(receive_book_taker(book)).to be_nil
     end
   end
 end
