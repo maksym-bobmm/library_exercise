@@ -1,0 +1,27 @@
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+Metrics/LineLength:
+  Max: 120
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+Style/BlockDelimiters:
+  Exclude:
+    - "spec/**/*"
+Layout/SpaceInsideBlockBraces:
+  Exclude:
+    - "spec/**/*"
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*"
+Style/AndOr:
+  Exclude:
+    - "app/controllers/comments_controller.rb"
+    - "app/controllers/books_controller.rb"
+Style/ConditionalAssignment:
+  Exclude:
+    - "app/controllers/comments_controller.rb"

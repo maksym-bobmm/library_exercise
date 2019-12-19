@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :book do
     name { Faker::Book.title }
@@ -9,7 +11,7 @@ FactoryBot.define do
       users_likes { [create(:users_likes, user)] }
     end
     factory :book_with_image do
-      remote_avatar_url { Faker::Avatar.image( size: "450x450" ) }
+      remote_avatar_url { Faker::Avatar.image(size: '450x450') }
     end
   end
 end

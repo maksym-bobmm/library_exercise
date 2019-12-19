@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# User like class. Embedded inside book, contain user who liked book and value of like
 class UsersLike
   include Mongoid::Document
   field :user_id, type: String

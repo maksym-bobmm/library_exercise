@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# book controller
 class BooksController < ApplicationController
   def index
     @books = Book.order_by(name: :asc).page params[:page]
-    @top_books = Book.all.to_a.sort_by { |book| book.rating }.last(5).reverse
+    @top_books = Book.all.to_a.sort_by(&:rating).last(5).reverse
   end
 
   def new; end
@@ -59,7 +62,7 @@ class BooksController < ApplicationController
     return if book.state == false
 
     book.update_attributes(state: false)
-    book.histories.create(user_id: current_user.id, take_date: Time.now )
+    book.histories.create(user_id: current_user.id, take_date: Time.now)
 
     render json: { button: helpers.draw_take_button(book) }
   end

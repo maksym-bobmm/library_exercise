@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'carrierwave/mongoid'
 
 CarrierWave.configure do |config|

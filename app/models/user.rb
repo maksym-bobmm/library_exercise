@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# user class
 class User
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
@@ -8,8 +11,8 @@ class User
          :recoverable, :rememberable, :validatable
 
   ## Database authenticatable
-  field :email,              type: String, default: ""
-  field :encrypted_password, type: String, default: ""
+  field :email,              type: String, default: ''
+  field :encrypted_password, type: String, default: ''
 
   ## Recoverable
   field :reset_password_token,   type: String

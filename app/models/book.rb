@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Book class
 class Book
   include Mongoid::Document
   mount_uploader :avatar, AvatarUploader
@@ -20,7 +23,7 @@ class Book
   end
 
   def rating
-    return 0 if users_likes.size == 0
+    return 0 if users_likes.size.zero?
 
     likes_sum / users_likes.size.to_f
   end

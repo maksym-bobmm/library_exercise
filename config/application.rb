@@ -3,7 +3,7 @@
 require_relative 'boot'
 # require 'carrierwave'
 
-%w(
+%w[
   active_model/railtie
   action_controller/railtie
   action_view/railtie
@@ -12,7 +12,7 @@ require_relative 'boot'
   action_cable/engine
   rails/test_unit/railtie
   sprockets/railtie
-).each do |railtie|
+].each do |railtie|
   begin
     require railtie
   rescue LoadError

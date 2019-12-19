@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# history class
 class History
   include Mongoid::Document
   field :take_date, type: Time

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
@@ -12,16 +14,15 @@ RSpec.describe CommentsController, type: :controller do
     it { is_expected.to route(:delete, '/comments/1').to(action: :destroy, id: 1) }
   end
   describe 'action tests check that' do
-
     let!(:comment) { create(:comment, book_id: @book.id, user_id: @user.id) }
     context 'not signed in user' do
       it 'do not delete comment on DELETE Comment#destoy' do
-        expect { delete :destroy, params: { id: comment.id } }.to_not change{ Comment.count }
+        expect { delete :destroy, params: { id: comment.id } }.to_not change { Comment.count }
       end
       it 'do not create comment on POST Comment#create' do
         expect {
           post :create, params: { book_id: @book.id, user_id: @user.id, body: 'test' }
-        }.to_not change{ Comment.count }
+        }.to_not change { Comment.count }
       end
       it 'do not update comment on PATCH Comment#update' do
         expect {
@@ -39,12 +40,12 @@ RSpec.describe CommentsController, type: :controller do
     context 'signed in user' do
       before(:each) { sign_in @user }
       it 'delete comment on DELETE Comment#destoy' do
-        expect { delete :destroy, params: { id: comment.id } }.to change{ Comment.count }
+        expect { delete :destroy, params: { id: comment.id } }.to change { Comment.count }
       end
       it 'create comment on POST Comment#create' do
         expect {
           post :create, params: { book_id: @book.id, user_id: @user.id, body: 'test' }
-        }.to change{ Comment.count }
+        }.to change { Comment.count }
       end
       it 'update comment on PATCH Comment#update' do
         expect {
@@ -78,7 +79,7 @@ RSpec.describe CommentsController, type: :controller do
         is_expected.to respond_with(:success)
       end
       it 'gets 200 on DELETE comment#destroy' do
-      delete :destroy, params: { id: comment.id }
+        delete :destroy, params: { id: comment.id }
         is_expected.to respond_with(:success)
       end
     end
@@ -104,7 +105,8 @@ RSpec.describe CommentsController, type: :controller do
   end
   describe 'params' do
     let(:comment) { create(:comment, book_id: @book.id, user_id: @user.id) }
-    let(:params_for_comment)  { {
+    let(:params_for_comment) do
+      {
         body: Faker::Lorem.word,
         user_id: @user.id,
         book_id: @book.id,
@@ -112,10 +114,10 @@ RSpec.describe CommentsController, type: :controller do
         number: 42,
         id: @book.id
       }
-    }
+    end
     let(:params_for_nested_comment) { params_for_comment.merge(parent_comment_id: comment.id) }
     before(:each) { sign_in @user }
     it { is_expected.to permit(:body, :user_id).for(:create, params: params_for_comment) }
-    it { is_expected.to permit(:body, :user_id, :book_id).for(:create, params: params_for_nested_comment ) }
+    it { is_expected.to permit(:body, :user_id, :book_id).for(:create, params: params_for_nested_comment) }
   end
 end

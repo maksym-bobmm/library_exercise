@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :history_take_only, class: History do
     take_date { Time.now }

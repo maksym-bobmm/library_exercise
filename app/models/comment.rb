@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# comment class
 class Comment
   include Mongoid::Document
   include Mongoid::Timestamps

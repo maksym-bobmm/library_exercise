@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
+# comments controller
 class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    render json: { created: false } and return if params['body']&.empty?
+    render json: { created: false } and return unless params['body']
 
     book = Book.find(params['book_id'])
     return unless book
@@ -20,6 +23,7 @@ class CommentsController < ApplicationController
 
   def update
     return unless params['body']
+
     comment = Comment.find(params['comment_id'])
     comment.update(body: params['body'])
 
