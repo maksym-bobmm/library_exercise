@@ -6,7 +6,6 @@ $(document).on('turbolinks:load', function() {
                 let rating = $('.rating');
                 rating.children().remove();
                 rating.append(event.detail[0].tags);
-                debugger;
                 if(JSON.parse(event.detail[0].already_liked) === false)
                     ++document.getElementsByClassName("likes_count")[0].textContent;
                 document.getElementsByClassName("average_rating")[0].textContent = event.detail[0].average_rating;
@@ -50,13 +49,7 @@ $(document).on('turbolinks:load', function() {
                 let last_Child = parent_element.lastChild;
                 if (parent_id_input !== null)
                     this.removeChild(parent_id_input);
-                // last_Child.style.backgroundColor = "#44aa44";
-                // setTimeout(function () {
-                //     last_Child.style.backgroundColor = "";
-                // }, 200);
-                // last_Child.scrollIntoView();
                 $('#new-comment').modal('hide');
-                // last_Child.focus();
             }
         });
         body.on('ajax:success', '.comment-delete-link', function(event) {
@@ -72,9 +65,6 @@ $(document).on('turbolinks:load', function() {
                 $('#delete_multiple').show();
             else
                 $('#delete_multiple').hide();
-        });
-        body.on('checked', '.checkbox', function(event) {
-            alert('aaaaa')
         });
         $(document).ready(function(){
             $('[data-toggle="popover"]').popover();
