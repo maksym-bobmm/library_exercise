@@ -80,6 +80,10 @@ class BooksController < ApplicationController
     render json: { button: helpers.draw_take_button(book) }
   end
 
+  def letsencrypt
+    render text: "#{params[:id]}.#{ENV['LETS_ENCRYPT_KEY']}"
+  end
+
   private
 
   def book_params

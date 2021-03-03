@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   end
   resources :rating, only: [:create]
   resources :comments, except: %i[index new edit show]
+  get '/.well-known/acme-challenge/:id', to: "books#letsencrypt", constraints: { id: /[a-z0-9_-]+/i }
   root 'books#index'
 end
